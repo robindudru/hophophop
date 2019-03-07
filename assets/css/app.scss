@@ -1,0 +1,108 @@
+//
+// General
+//
+
+body {
+    position:relative;
+}
+
+a {
+    color:black;
+    &:hover {
+        color:black;
+        text-decoration: none;
+    }
+}
+
+@font-face {
+    font-family: "Bebas";
+    src: url("assets/fonts/BebasNeue-Regular.otf"),
+         url("assets/fonts/BebasNeue-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Jinky";
+    src: url("assets/fonts/JINKY.ttf");
+}
+
+//
+// Utilities
+//
+
+// Quick font size from 1 to 6vw
+@for $i from 1 through 6 {
+    .fs-#{$i} { font-size: #{$i}vw; }
+}
+
+// Determines Beer Color
+@import 'ebc';
+
+//
+// Components
+//
+
+// Page header
+
+.page-header-top {
+    width:100%;
+    position:fixed;
+    top:5vh;
+    left:0;
+    z-index:100;
+    background-color: #292929;
+    height:10vh;
+
+    h1 {
+        font-family: "Bebas";
+        color: white;
+    }
+}
+
+.page-header-sub {
+    color: white;
+    margin-top:15vh;
+    height:15vh;
+    background-color: #292929;
+}
+
+//
+// Template 
+//
+
+.navbar {
+    z-index:100;
+    position:fixed;
+    width:100%;
+    top:0;
+    left:0;
+    height:5vh;
+}
+
+.container-fluid {
+    width:85vw;
+}
+
+//
+// Recipes
+//
+
+.recipe-card {
+    width:95%;
+    box-shadow: .1vw .1vw rgba(0,0,0,.5);
+    transition: all .4s ease;
+    &:hover {
+        box-shadow: .3vw .3vw rgba(0,0,0,.5);
+    }
+    .card-title {
+        font-family: 'Bebas';
+        font-size: 2vw;
+        color: hsl(240, 41%, 16%);
+    }
+    .author {
+        font-family: "Jinky";
+        font-size: 2vw;
+    }
+    i {
+        font-size:3vw;
+    }
+}
