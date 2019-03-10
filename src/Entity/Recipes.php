@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecipesRepository")
@@ -18,13 +19,9 @@ class Recipes
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=3, max=255, minMessage="Le titre doit contenir au moins 3 caractères")
      */
     private $title;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $style;
 
     /**
      * @ORM\Column(type="datetime")
@@ -42,39 +39,17 @@ class Recipes
     private $method;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", length=255, nullable=true)
+     * @Assert\LessThan(value=300, message="Cela semble bien long pour bouillir...")
      */
     private $boilTime;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\LessThan(value=101, message="Restons sobres... pas plus de 100 litres !")
      */
     private $batchSize;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $originalGravity;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $boilGravity;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $finalGravity;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $alcohol;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $bitterness;
 
     /**
      * @ORM\Column(type="integer")
@@ -102,14 +77,35 @@ class Recipes
     private $yeast = [];
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $mashGuide = [];
+    private $mashGuide;
 
     /**
      * @ORM\Column(type="array")
      */
     private $otherIngredients = [];
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Style", inversedBy="recipes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $style;
+
+    /**
+     * @ORM\Column(type="decimal", precision=4, scale=3, nullable=true)
+     */
+    private $originalGravity;
+
+    /**
+     * @ORM\Column(type="decimal", precision=4, scale=3, nullable=true)
+     */
+    private $finalGravity;
+
+    /**
+     * @ORM\Column(type="decimal", precision=2, scale=1, nullable=true)
+     */
+    private $alcohol;
 
     public function getId(): ?int
     {
@@ -124,18 +120,6 @@ class Recipes
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getStyle(): ?string
-    {
-        return $this->style;
-    }
-
-    public function setStyle(string $style): self
-    {
-        $this->style = $style;
 
         return $this;
     }
@@ -200,66 +184,6 @@ class Recipes
         return $this;
     }
 
-    public function getOriginalGravity(): ?int
-    {
-        return $this->originalGravity;
-    }
-
-    public function setOriginalGravity(int $originalGravity): self
-    {
-        $this->originalGravity = $originalGravity;
-
-        return $this;
-    }
-
-    public function getBoilGravity(): ?int
-    {
-        return $this->boilGravity;
-    }
-
-    public function setBoilGravity(int $boilGravity): self
-    {
-        $this->boilGravity = $boilGravity;
-
-        return $this;
-    }
-
-    public function getFinalGravity(): ?int
-    {
-        return $this->finalGravity;
-    }
-
-    public function setFinalGravity(int $finalGravity): self
-    {
-        $this->finalGravity = $finalGravity;
-
-        return $this;
-    }
-
-    public function getAlcohol(): ?int
-    {
-        return $this->alcohol;
-    }
-
-    public function setAlcohol(int $alcohol): self
-    {
-        $this->alcohol = $alcohol;
-
-        return $this;
-    }
-
-    public function getBitterness(): ?int
-    {
-        return $this->bitterness;
-    }
-
-    public function setBitterness(int $bitterness): self
-    {
-        $this->bitterness = $bitterness;
-
-        return $this;
-    }
-
     public function getColor(): ?int
     {
         return $this->color;
@@ -320,12 +244,12 @@ class Recipes
         return $this;
     }
 
-    public function getMashGuide(): ?array
+    public function getMashGuide(): ?string
     {
         return $this->mashGuide;
     }
 
-    public function setMashGuide(array $mashGuide): self
+    public function setMashGuide(?string $mashGuide): self
     {
         $this->mashGuide = $mashGuide;
 
@@ -340,6 +264,54 @@ class Recipes
     public function setOtherIngredients(array $otherIngredients): self
     {
         $this->otherIngredients = $otherIngredients;
+
+        return $this;
+    }
+
+    public function getStyle(): ?Style
+    {
+        return $this->style;
+    }
+
+    public function setStyle(?Style $style): self
+    {
+        $this->style = $style;
+
+        return $this;
+    }
+
+    public function getOriginalGravity()
+    {
+        return $this->originalGravity;
+    }
+
+    public function setOriginalGravity($originalGravity): self
+    {
+        $this->originalGravity = $originalGravity;
+
+        return $this;
+    }
+
+    public function getFinalGravity()
+    {
+        return $this->finalGravity;
+    }
+
+    public function setFinalGravity($finalGravity): self
+    {
+        $this->finalGravity = $finalGravity;
+
+        return $this;
+    }
+
+    public function getAlcohol()
+    {
+        return $this->alcohol;
+    }
+
+    public function setAlcohol($alcohol): self
+    {
+        $this->alcohol = $alcohol;
 
         return $this;
     }

@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ recipe.title }}{% endblock %}
+
 {% block pageheader %}{{ include('front/components/pageheader.html.twig') }}{% endblock %}
 
 {% block body %}
 <h1>{{ recipe.title }}</h1>
 <span class="text-muted">le {{ recipe.createdAt | date('d/m/Y')}}</span>
-<p>{{ recipe.style }}</p>
+<p>{{ recipe.style.name }}</p>
 {% endblock %}

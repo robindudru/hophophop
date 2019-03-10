@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formRecipe 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+<h1>Nouvelle Recette</h2>
+
+{{ form_start(formRecipe) }}
+{{form_widget(formRecipe) }}
+<button type="submit" class="btn btn-success">
+    {% if edit %}
+        Modifier
+    {% else %}
+        Ajouter
+    {% endif %}
+</button>
+
+{{ form_end(formRecipe) }}
+
+{% endblock %}

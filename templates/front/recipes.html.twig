@@ -5,18 +5,17 @@
 {% block body %}
 <section class="row recipes-list my-4">
 {% for recipe in recipes %}
-
     <article class="col-4 mt-5  ">
         <a href="{{ path('recipe', {'id': recipe.id}) }}">
-        <div class="card recipe-card justify-content-center pt-3 pb-1">
-            <h2 class="card-title text-center">{{ recipe.title }}</h2>
-            <div class="row mx-3 justify-content-around">
-                <i class="fas fa-beer ebc-{{ recipe.color }}"></i>
+            <div class="card recipe-card justify-content-center pt-3 pb-1">
+                <h2 class="card-title text-center">{{ recipe.title }}</h2>
+                <div class="row mx-3 justify-content-around">
+                    <i class="fas fa-beer ebc-{{ recipe.color }}"></i>
+                </div>
+                <div class="row mx-2 justify-content-end">
+                    <span class="author">{{ recipe.author }}</span>
+                </div>
             </div>
-            <div class="row mx-2 justify-content-end">
-                <span class="author">{{ recipe.author }}</span>
-            </div>
-        </div>
         </a>
     </article>
 {% endfor %}
