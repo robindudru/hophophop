@@ -1,0 +1,17 @@
+{% extends 'admin.base.html.twig' %}
+
+{% block title %}Malts{% endblock %}
+
+{% block body %}
+<section class="row recipes-list my-4">
+{% for malt in malts %}
+    <article class="col-4 mt-5  ">
+        <a href="{{ path('edit_malt', {'id': malt.id}) }}">
+            <div class="card recipe-card justify-content-center pt-3 pb-1">
+                <h2 class="card-title text-center">{{ malt.name }}</h2>
+            </div>
+        </a>
+    </article>
+{% endfor %}
+</section>
+{% endblock %}

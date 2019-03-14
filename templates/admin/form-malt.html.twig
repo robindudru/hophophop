@@ -1,0 +1,20 @@
+{% extends 'admin.base.html.twig' %}
+
+{% form_theme formMalt 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+<h1>Nouveau Malt</h2>
+
+{{ form_start(formMalt) }}
+{{form_widget(formMalt) }}
+<button type="submit" class="btn btn-success">
+    {% if edit %}
+        Modifier
+    {% else %}
+        Ajouter
+    {% endif %}
+</button>
+{{ form_end(formMalt) }}
+
+{% endblock %}

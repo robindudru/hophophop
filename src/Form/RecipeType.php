@@ -2,8 +2,13 @@
 
 namespace App\Form;
 
+use App\Entity\Malt;
 use App\Entity\Style;
+use App\Entity\Yeast;
+use App\Form\MaltType;
 use App\Entity\Recipes;
+use App\Form\RecipeHopsType;
+use App\Form\AddMaltToRecipeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -12,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class RecipeType extends AbstractType
 {
@@ -29,12 +35,39 @@ class RecipeType extends AbstractType
                 'placeholder' => 'Choisis un style de bière', 
                 'choice_label' => 'name'
             ])
-            ->add('author', HiddenType::class)
             ->add('method', ChoiceType::class, [
                 'choices' => [
                     'Kit' => 'kit',
                     'Tout Grain' => 'allgrain'
                 ]
+            ])
+            ->add('recipeMalts', CollectionType::class, [
+                'entry_type' => RecipeMaltsType::class,
+                'entry_options' => ['label' => false],
+                'label' => 'Malts',
+                'allow_add' => true,
+                'allow_delete' => true,
+                'required' => false,
+                'prototype' => true,
+                'delete_empty' => true,
+                'by_reference' => false
+            ])
+            ->add('recipeHops', CollectionType::class, [
+                'entry_type' => RecipeHopsType::class,
+                'entry_options' => ['label' => false],
+                'label' => 'Houblons',
+                'allow_add' => true,
+                'allow_delete' => true,
+                'required' => false,
+                'prototype' => true,
+                'delete_empty' => true,
+                'by_reference' => false
+            ])
+            ->add('yeast', EntityType::class, [
+                'class' => Yeast::class,
+                'placeholder' => 'Choisis une levure',
+                'choice_label' => 'name',
+                'label' => 'Levure'
             ])
             ->add('boilTime', TextType::class, [
                 'attr' => [
@@ -60,13 +93,11 @@ class RecipeType extends AbstractType
                 ],
                 'label' => 'Densité finale'
             ])
-            ->add('alcohol', HiddenType::class)
-            ->add('color', HiddenType::class)
-            ->add('thumbsUp', HiddenType::class)
             ->add('mashGuide', TextareaType::class, [
                 'attr' => [
                     'placeholder' => 'Notes additionnelles que tu souhaites ajouter'
                 ],
+                'required' => false,
                 'label' => 'Notes sur le brassage'
             ])
         ;

@@ -18,6 +18,11 @@ security:
 
             provider: in_database
 
+            remember_me:
+                secret: '%kernel.secret%'
+                path: /
+                always_remember_me: true
+
             form_login:
                 login_path: security_login
                 check_path: security_login
@@ -37,5 +42,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_BIERROT_GOURMAND }
         # - { path: ^/profile, roles: ROLE_USER }

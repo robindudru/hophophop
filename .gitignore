@@ -3,8 +3,6 @@
 /.env.local
 /.env.local.php
 /.env.*.local
-/.env
-/.env.test
 /public/bundles/
 /var/
 /vendor/

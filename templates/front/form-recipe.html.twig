@@ -7,7 +7,31 @@
 <h1>Nouvelle Recette</h2>
 
 {{ form_start(formRecipe) }}
-{{form_widget(formRecipe) }}
+    {{ form_row(formRecipe.title)}}
+    {{ form_row(formRecipe.style)}}
+    {{ form_row(formRecipe.method)}}
+    <h4>Malts</h4>
+    <ul class="malts" data-prototype="{{ form_widget(formRecipe.recipeMalts.vars.prototype)|e('html_attr') }}">
+    {% for malt in formRecipe.recipeMalts %}
+            <li>{{ form_row(malt.weight) }}
+            {{ form_row(malt.malt) }}</li>
+    {% endfor %}
+    </ul>
+    <h4>Houblons</h4>
+    <ul class="hops" data-prototype="{{ form_widget(formRecipe.recipeHops.vars.prototype)|e('html_attr') }}">
+    {% for hop in formRecipe.recipeHops %}
+            <li>{{ form_row(hop.weight) }}
+            {{ form_row(hop.hop) }}
+            {{ form_row(hop.boilTime) }}
+            {{ form_row(hop.version) }}</li>
+    {% endfor %}
+    </ul>
+    {{ form_row(formRecipe.yeast)}}
+    {{ form_row(formRecipe.boilTime)}}
+    {{ form_row(formRecipe.batchSize)}}
+    {{ form_row(formRecipe.originalGravity)}}
+    {{ form_row(formRecipe.finalGravity)}}
+    {{ form_row(formRecipe.mashGuide)}}
 <button type="submit" class="btn btn-success">
     {% if edit %}
         Modifier

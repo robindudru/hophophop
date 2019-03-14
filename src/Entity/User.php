@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -49,6 +51,40 @@ class User implements UserInterface
      */
     public $confirmPassword;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Recipes", mappedBy="author", orphanRemoval=true)
+     */
+    private $recipes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="author", orphanRemoval=true)
+     */
+    private $comments;
+
+    /**
+    * @ORM\Column(type="json")
+    */
+    private $roles = [];
+
+    public function __construct()
+    {
+        $this->recipes = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles($roles) {
+        $this->roles[] = $roles;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -94,7 +130,65 @@ class User implements UserInterface
 
     public function getSalt() {}
 
-    public function getRoles() {
-        return ['ROLE_USER'];
+    /**
+     * @return Collection|Recipes[]
+     */
+    public function getRecipes(): Collection
+    {
+        return $this->recipes;
+    }
+
+    public function addRecipe(Recipes $recipe): self
+    {
+        if (!$this->recipes->contains($recipe)) {
+            $this->recipes[] = $recipe;
+            $recipe->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipe(Recipes $recipe): self
+    {
+        if ($this->recipes->contains($recipe)) {
+            $this->recipes->removeElement($recipe);
+            // set the owning side to null (unless already changed)
+            if ($recipe->getAuthor() === $this) {
+                $recipe->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getAuthor() === $this) {
+                $comment->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -2,14 +2,16 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Recipes;
 use App\Form\RecipeType;
+use App\Entity\RecipeHops;
+use App\Entity\RecipeMalts;
 use App\Repository\RecipesRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FrontController extends AbstractController
 {
@@ -38,10 +40,12 @@ class FrontController extends AbstractController
      * @Route("recette/ajouter", name="add_recipe")
      * @Route("recette/{id}/modifier", name="edit_recipe")
      */
-    public function formRecipe(Recipes $recipe = null, Request $request, ObjectManager $manager) {
+    public function formRecipe(Recipes $recipe = null, RecipeMalts $recipeMalts = null, RecipeHops $recipeHops = null, Request $request, ObjectManager $manager) {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         if(!$recipe){
             $recipe = new Recipes();
+            $recipeMalts = new RecipeMalts();
+            $recipeHops = new RecipeHops();
         }
         $user = $this->getUser();
 
@@ -50,24 +54,31 @@ class FrontController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if(!$recipe->getId()){ 
+            if(!$recipe->getId()){
                 $og = $recipe->getOriginalGravity();
                 $fg = $recipe->getFinalGravity(); 
                 $alcohol = (76.08 * ($og - $fg) / (1.775 - $og)) * ($fg / 0.794);
+                
+                $mcus = [];
+                $malts = $recipe->getRecipeMalts();
+                foreach($malts as $malt) {
+                   $mcu = (4.23 * $malt->getWeight() * $malt->getMalt()->getEbc()) / $recipe->getBatchSize();
+                   var_dump($mcu);
+                    array_push($mcus, $mcu);
+                }
+                $mcu = array_sum($mcus);
+                $ebc = 2.939 * ($mcu ** 0.6859);
+
                 $recipe->setCreatedAt(new \DateTime())
-                       ->setAuthor($user->getUsername())
+                       ->setAuthor($user)
                        ->setAlcohol($alcohol)
-                       ->setColor(25)
+                       ->setColor($ebc)
                        ->setThumbsUp(0)
-                       ->setMalts([1])
-                       ->setHops([1])
-                       ->setYeast([1])
-                       ->setOtherIngredients([1]);
-            }
+            ;}
             $manager->persist($recipe);
             $manager->flush();
 
-           // return $this->redirectToRoute('recipe', ['id' => $recipe->getId()]);
+           return $this->redirectToRoute('recipe', ['id' => $recipe->getId()]);
         }
 
         return $this->render('front/form-recipe.html.twig', [

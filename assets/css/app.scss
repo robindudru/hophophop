@@ -25,6 +25,11 @@ a {
     src: url("assets/fonts/JINKY.ttf");
 }
 
+#user-top-menu {
+    position:absolute;
+    right:0;
+}
+
 //
 // Utilities
 //
@@ -69,17 +74,23 @@ a {
 // Template 
 //
 
+$navbarHeight: 5vh;
+
 .navbar {
     z-index:100;
     position:fixed;
     width:100%;
     top:0;
     left:0;
-    height:5vh;
+    height:$navbarHeight;
 }
 
 .container-fluid {
     width:85vw;
+}
+
+.container-fluid-admin {
+    margin-top: $navbarHeight;
 }
 
 //

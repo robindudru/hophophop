@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -27,11 +29,6 @@ class Recipes
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $author;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -62,29 +59,9 @@ class Recipes
     private $thumbsUp;
 
     /**
-     * @ORM\Column(type="array")
-     */
-    private $malts = [];
-
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $hops = [];
-
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $yeast = [];
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $mashGuide;
-
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $otherIngredients = [];
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Style", inversedBy="recipes")
@@ -94,18 +71,55 @@ class Recipes
 
     /**
      * @ORM\Column(type="decimal", precision=4, scale=3, nullable=true)
+     * @Assert\LessThanOrEqual(value=1.100, message="La densité initiale ne peut pas être supérieure à 1.100")
+     * @Assert\GreaterThanOrEqual(value=1.000, message="La densité initiale ne peut pas être inférieure à 1.000")
      */
     private $originalGravity;
 
     /**
      * @ORM\Column(type="decimal", precision=4, scale=3, nullable=true)
+     * @Assert\LessThanOrEqual(value=1.100, message="La densité initiale ne peut pas être supérieure à 1.100")
+     * @Assert\GreaterThanOrEqual(value=1.000, message="La densité initiale ne peut pas être inférieure à 1.000")
      */
     private $finalGravity;
 
     /**
-     * @ORM\Column(type="decimal", precision=2, scale=1, nullable=true)
+     * @ORM\Column(type="decimal", precision=3, scale=1, nullable=true)
      */
     private $alcohol;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="recipes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", orphanRemoval=true)
+     */
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeMalts", mappedBy="recipe", orphanRemoval=true, cascade={"persist"})
+     */
+    private $recipeMalts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeHops", mappedBy="recipe", orphanRemoval=true, cascade={"persist"})
+     */
+    private $recipeHops;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Yeast", inversedBy="recipes")
+     */
+    private $yeast;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+        $this->recipeMalts = new ArrayCollection();
+        $this->recipeHops = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -136,12 +150,12 @@ class Recipes
         return $this;
     }
 
-    public function getAuthor(): ?string
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(string $author): self
+    public function setAuthor(User $author): self
     {
         $this->author = $author;
 
@@ -208,42 +222,6 @@ class Recipes
         return $this;
     }
 
-    public function getMalts(): ?array
-    {
-        return $this->malts;
-    }
-
-    public function setMalts(array $malts): self
-    {
-        $this->malts = $malts;
-
-        return $this;
-    }
-
-    public function getHops(): ?array
-    {
-        return $this->hops;
-    }
-
-    public function setHops(array $hops): self
-    {
-        $this->hops = $hops;
-
-        return $this;
-    }
-
-    public function getYeast(): ?array
-    {
-        return $this->yeast;
-    }
-
-    public function setYeast(array $yeast): self
-    {
-        $this->yeast = $yeast;
-
-        return $this;
-    }
-
     public function getMashGuide(): ?string
     {
         return $this->mashGuide;
@@ -252,18 +230,6 @@ class Recipes
     public function setMashGuide(?string $mashGuide): self
     {
         $this->mashGuide = $mashGuide;
-
-        return $this;
-    }
-
-    public function getOtherIngredients(): ?array
-    {
-        return $this->otherIngredients;
-    }
-
-    public function setOtherIngredients(array $otherIngredients): self
-    {
-        $this->otherIngredients = $otherIngredients;
 
         return $this;
     }
@@ -279,7 +245,6 @@ class Recipes
 
         return $this;
     }
-
     public function getOriginalGravity()
     {
         return $this->originalGravity;
@@ -312,6 +277,111 @@ class Recipes
     public function setAlcohol($alcohol): self
     {
         $this->alcohol = $alcohol;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getArticle() === $this) {
+                $comment->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RecipeMalts[]
+     */
+    public function getRecipeMalts(): Collection
+    {
+        return $this->recipeMalts;
+    }
+
+    public function addRecipeMalt(RecipeMalts $recipeMalt): self
+    {
+        if (!$this->recipeMalts->contains($recipeMalt)) {
+            $this->recipeMalts[] = $recipeMalt;
+            $recipeMalt->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeMalt(RecipeMalts $recipeMalt): self
+    {
+        if ($this->recipeMalts->contains($recipeMalt)) {
+            $this->recipeMalts->removeElement($recipeMalt);
+            // set the owning side to null (unless already changed)
+            if ($recipeMalt->getRecipe() === $this) {
+                $recipeMalt->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RecipeHops[]
+     */
+    public function getRecipeHops(): Collection
+    {
+        return $this->recipeHops;
+    }
+
+    public function addRecipeHop(RecipeHops $recipeHop): self
+    {
+        if (!$this->recipeHops->contains($recipeHop)) {
+            $this->recipeHops[] = $recipeHop;
+            $recipeHop->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeHop(RecipeHops $recipeHop): self
+    {
+        if ($this->recipeHops->contains($recipeHop)) {
+            $this->recipeHops->removeElement($recipeHop);
+            // set the owning side to null (unless already changed)
+            if ($recipeHop->getRecipe() === $this) {
+                $recipeHop->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getYeast(): ?Yeast
+    {
+        return $this->yeast;
+    }
+
+    public function setYeast(?Yeast $yeast): self
+    {
+        $this->yeast = $yeast;
 
         return $this;
     }
