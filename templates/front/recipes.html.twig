@@ -3,20 +3,54 @@
 {% block title %}Recettes de bière{% endblock %}
 
 {% block body %}
-<section class="row recipes-list my-4">
+<section class="row recipes-list mx-auto pt-1">
 {% for recipe in recipes %}
-    <article class="col-4 mt-5  ">
-        <a href="{{ path('recipe', {'id': recipe.id}) }}">
-            <div class="card recipe-card justify-content-center pt-3 pb-1">
-                <h2 class="card-title text-center">{{ recipe.title }}</h2>
-                <div class="row mx-3 justify-content-around">
-                    <i class="fas fa-beer ebc-{{ recipe.color }}"></i>
-                </div>
-                <div class="row mx-2 justify-content-end">
-                    <span class="author">{{ recipe.author.username }}</span>
-                </div>
+    <article class="col-4 mt-5">
+        <div class="card recipe-card">
+            <div class="row no-gutters card-header">
+                <a href="{{ path('recipe', {'id': recipe.id}) }}">
+                    <h2 class="card-title text-center mx-2 mb-0">{{ recipe.title }}</h2>
+                </a>
             </div>
-        </a>
+            <div class="card-content pl-3">
+                <div class="my-2">
+                    {% if recipe.method == "kit" %}
+                        <span class="badge badge-secondary">Kit</span>
+                    {% else %}
+                        <span class="badge badge-secondary">Tout Grain</span>
+                    {% endif %}
+                    <span class="badge badge-secondary">{{recipe.style.name}}</span>
+                    {% if recipe.method == "kit" %}
+                        <span class="badge badge-success">Débutant</span>
+                    {% elseif recipe.recipeHops|length > 1 %}
+                        <span class="badge badge-dark">Expert</span>
+                    {% elseif recipe.recipeHops|length == 1 %}
+                        <span class="badge badge-info">Confirmé</span>
+                    {% endif %}
+                </div>
+                <div class="row recipe-icons my-3 flex-row align-items-center justify-content-center">
+                    <div class="px-3 thumbs-up"><i class="far fa-thumbs-up"></i><span>{{recipe.thumbsUp}}</span></div>
+                    <div class="alcohol px-3">{{recipe.alcohol}}%</div>
+                    <i class="px-3 fas fa-beer ebc-{{ recipe.color }}"></i>
+                </div>  
+                <div class="col-12">
+                    
+                        <i class="fas fa-quote-left fa-pull-left"></i>
+                        <p class="text-justify mb-1 mr-3">{{recipe.description}}</p> 
+                    
+                </div>
+                  
+            </div>
+            <div class="row no-gutters card-footer px-2 align-items-center">
+                    <div class="recipe-avatar">
+                        <img src="{{ asset('build/avatars/')}}{{recipe.author.avatar}}" />
+                    </div>
+                    <div class="ml-2">
+                        <b>{{ recipe.author.username }}</b><br/>
+                        <span class="text-muted">{{recipe.createdAt|date('d/m/Y')}}</span>
+                    </div>
+            </div>
+        </div>
     </article>
 {% endfor %}
 </section>

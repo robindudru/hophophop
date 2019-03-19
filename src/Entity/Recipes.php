@@ -100,12 +100,12 @@ class Recipes
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RecipeMalts", mappedBy="recipe", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeMalts", mappedBy="recipe", orphanRemoval=true, cascade={"all"})
      */
     private $recipeMalts;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RecipeHops", mappedBy="recipe", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeHops", mappedBy="recipe", orphanRemoval=true, cascade={"all"})
      */
     private $recipeHops;
 
@@ -114,11 +114,22 @@ class Recipes
      */
     private $yeast;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeOthers", mappedBy="recipes", cascade={"all"})
+     */
+    private $recipeOthers;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->recipeMalts = new ArrayCollection();
         $this->recipeHops = new ArrayCollection();
+        $this->recipeOthers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -382,6 +393,49 @@ class Recipes
     public function setYeast(?Yeast $yeast): self
     {
         $this->yeast = $yeast;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RecipeOthers[]
+     */
+    public function getRecipeOthers(): Collection
+    {
+        return $this->recipeOthers;
+    }
+
+    public function addRecipeOther(RecipeOthers $recipeOther): self
+    {
+        if (!$this->recipeOthers->contains($recipeOther)) {
+            $this->recipeOthers[] = $recipeOther;
+            $recipeOther->setRecipes($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeOther(RecipeOthers $recipeOther): self
+    {
+        if ($this->recipeOthers->contains($recipeOther)) {
+            $this->recipeOthers->removeElement($recipeOther);
+            // set the owning side to null (unless already changed)
+            if ($recipeOther->getRecipes() === $this) {
+                $recipeOther->setRecipes(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

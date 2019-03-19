@@ -62,5 +62,7 @@
 }
 
 @for $i from 1 through 60 {
-    .ebc-#{$i} { color: set-ebc($i); }
+    .ebc-#{$i} { 
+        color: set-ebc($i);
+    }
 }

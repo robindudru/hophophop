@@ -19,20 +19,13 @@ class RecipesFixtures extends Fixture
                    ->setStyle($faker->numberBetween(1,50))
                    ->setCreatedAt($faker->dateTimeThisDecade('now'))
                    ->setAuthor($faker->firstName().$faker->lastName())
-                   ->setMethod("Tout Grain")
-                   ->setBoilTime(90)
-                   ->setBatchSize(20)
-                   ->setOriginalGravity(1050)
-                   ->setFinalGravity(1012)
-                   ->setAlcohol(5.5)
-                   ->setColor($faker->numberBetween(1,60))
-                   ->setThumbsUp(32)
-                   ->setMalts([42,2])
-                   ->setHops([32, 56, 32])
-                   ->setYeast([43])
-                   ->setOtherIngredients([3])
-                   ->setMashGuide('');
-
+                   ->setMethod("allgrain")
+                   ->setBoilTime($faker->numberBetween(60, 120))
+                   ->setBatchSize($faker->numberBetween(15, 50))
+                   ->setOriginalGravity($faker->numberBetween(1.030, 1.090))
+                   ->setFinalGravity($faker->numberBetween(1.008, 1.020))
+                   ->setThumbsUp($faker->numberBetween(0, 150))
+                   ->setMashGuide($faker->sentence(50, false));
             $manager->persist($recipe);
         }
 

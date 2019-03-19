@@ -1,11 +1,17 @@
-<div class="page-header-top px-5">
-    {% if recipe is defined %}
-    Recipe
-    {% endif %}
-    {% if recipes is defined %}
-    <h1 class="fs-4 pt-1">Recettes de bière</h1>
-    {% endif %}
-</div>
-<div class="page-header-sub px-5 py-3">
-    Blah blah blah
+<div class="row no-gutters page-header-top px-5 py-3">
+    <h1 class="fs-3 px-5 my-auto">
+        {% if recipe is defined %}
+        {{recipe.title}}
+        {% endif %}
+        {% if recipes is defined %}
+        Recettes de biere
+        {% endif %}
+        {% if formRecipe is defined %}
+            {% if edit %}
+                Editer une recette
+            {% else %}
+                Ajouter une recette
+            {% endif %}
+        {% endif %}
+    </h1>
 </div>

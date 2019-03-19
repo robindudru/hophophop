@@ -12,5 +12,3 @@ import '../css/app.scss';
 import $ from 'jquery';
 
 import '../js/AddCollectionTypeField.js';
-
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');

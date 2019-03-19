@@ -2,55 +2,60 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Hophophop | {% block title %}{% endblock %}</title>
-        <link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.min.css">
+        <title>BrewMate | {% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="{{ path('home') }}">HopHopHop</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('home') }}">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('recipes') }}">Recettes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">BrewMate</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Tutoriels</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav mr-auto" id="user-top-menu">
-                {% if not app.user %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('security_registration') }}">Inscription</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('security_login') }}">Connexion</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('add_recipe') }}">Ajouter une recette</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('security_logout') }}">Déconnexion</a>
-                    </li>
-                {% endif %}
-                </ul>
+        <nav class="navbar row no-gutters p-0 m-0 align-items-start justify-content-start">
+            <div class="col-12 text-center">
+                <a href="{{ path('home') }}"><span class="navbar-brand pr-2">BM</span></a>
+            </div>
+            <div class="col-12 text-center">
+                <a href="{{ path('home') }}"><i class="fas fa-home"></i></span></a>
+            </div>
+            <div class="col-12 text-center">
+                <a href="{{ path('recipes') }}"><i class="fas fa-book"></i></a>
+            </div>
+            <div class="col-12 text-center">
+                <a href="#"><i class="fas fa-beer"></i></a>
+            </div>
+            <div class="col-12 text-center">
+                <a href=""><i class="fas fa-graduation-cap"></i></a>
+            </div>
+            <div class="bottom-navbar col-12">
+            {% if not app.user %}
+                <div class="col-12">
+                    <a href="{{ path('security_registration') }}"><i class="fas fa-user-circle"></i></a>
+                </div>
+                <div class="col-12 mt-3">
+                    <a href="{{ path('security_login') }}"><i class="fas fa-power-off"></i></a>
+                </div>
+            {% else %}
+                <div class="dropright col-12">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" id="user-panel" href="#" aria-expanded="false">
+                    <div class="user-avatar">
+                        <img src="{{ asset('build/avatars/')}}{{user.avatar}}" />
+                    </div>
+                    </a>
+                    <div class="dropdown-menu mt-1 mr-3" aria-labelledby="user-panel">
+                        <a class="dropdown-item" href="{{ path('edit_profile') }}">Profil</a>
+                        <a class="dropdown-item" href="{{ path('add_recipe') }}">Ajouter une recette</a>
+                        <a class="dropdown-item" href="{{ path('security_logout') }}">Déconnexion</a>
+                    </div>
+                </div>
+            {% endif %}
             </div>
         </nav>
         {% block pageheader %}{{ include('front/components/pageheader.html.twig') }}{% endblock %}
-        <div class="container-fluid">
+        <div class="container-fluid main-content justify-content-center">
+            
             {% block body %}{% endblock %}
         </div>
         {% block javascripts %}

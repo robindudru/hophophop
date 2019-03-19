@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formEditProfile 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+{{ form_start(formEditProfile) }}
+
+{{ form_row(formEditProfile.email) }}
+{{ form_row(formEditProfile.username) }}
+<div class="row">
+    <div class="col-9">
+        {{ form_row(formEditProfile.avatar)}}
+    </div>
+    <div class="edit-profile-avatar">
+        <img src="{{ asset('build/avatars/')}}{{user.avatar}}" />
+    </div>
+</div>
+<button type="submit" class="btn btn-success">Modifier</button>
+{{ form_end(formEditProfile) }}
+
+{% endblock %}

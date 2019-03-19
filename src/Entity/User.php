@@ -66,6 +66,12 @@ class User implements UserInterface
     */
     private $roles = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(maxSize="1024k", maxSizeMessage="Le fichier doit peser moins d'1Mo", mimeTypes= {"image/png", "image/jpeg"}, mimeTypesMessage = "Le fichier doit être au format jpeg ou png")
+     */
+    private $avatar;
+
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
@@ -188,6 +194,18 @@ class User implements UserInterface
                 $comment->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

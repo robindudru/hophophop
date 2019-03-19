@@ -8,7 +8,9 @@ use App\Entity\Yeast;
 use App\Form\MaltType;
 use App\Entity\Recipes;
 use App\Form\RecipeHopsType;
+use App\Form\RecipeOthersType;
 use App\Form\AddMaltToRecipeType;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -33,7 +35,11 @@ class RecipeType extends AbstractType
             ->add('style', EntityType::class, [
                 'class'  => Style::class,
                 'placeholder' => 'Choisis un style de bière', 
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('style')
+                        ->orderBy('style.name', 'ASC');
+                },
             ])
             ->add('method', ChoiceType::class, [
                 'choices' => [
@@ -41,10 +47,11 @@ class RecipeType extends AbstractType
                     'Tout Grain' => 'allgrain'
                 ]
             ])
+            ->add('description')
             ->add('recipeMalts', CollectionType::class, [
                 'entry_type' => RecipeMaltsType::class,
                 'entry_options' => ['label' => false],
-                'label' => 'Malts',
+                'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'required' => false,
@@ -55,7 +62,18 @@ class RecipeType extends AbstractType
             ->add('recipeHops', CollectionType::class, [
                 'entry_type' => RecipeHopsType::class,
                 'entry_options' => ['label' => false],
-                'label' => 'Houblons',
+                'label' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'required' => false,
+                'prototype' => true,
+                'delete_empty' => true,
+                'by_reference' => false
+            ])
+            ->add('recipeOthers', CollectionType::class, [
+                'entry_type' => RecipeOthersType::class,
+                'entry_options' => ['label' => false],
+                'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'required' => false,

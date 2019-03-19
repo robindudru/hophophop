@@ -2,8 +2,19 @@
 // General
 //
 
+$BrewOrange: #e96e53;
+$CardColor: #474756;
+$BrewBlack: #383843;
+
 body {
     position:relative;
+}
+
+.main-content {
+    position:relative;
+    margin-left: 4vw;
+    margin-top: 7vh;
+    width:96vw;
 }
 
 a {
@@ -14,20 +25,22 @@ a {
     }
 }
 
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 @font-face {
-    font-family: "Bebas";
-    src: url("assets/fonts/BebasNeue-Regular.otf"),
-         url("assets/fonts/BebasNeue-Regular.ttf");
+    font-family: "Collegier";
+    src: url("assets/fonts/Collegier.ttf");
 }
 
 @font-face {
-    font-family: "Jinky";
-    src: url("assets/fonts/JINKY.ttf");
+    font-family: "CabbageTown";
+    src: url("assets/fonts/CabbageTownStd.ttf");
 }
 
-#user-top-menu {
-    position:absolute;
-    right:0;
+@font-face {
+    font-family: "Fonters";
+    src: url("assets/fonts/Fonters.otf"),
+         url("assets/fonts/Fonters.ttf");
 }
 
 //
@@ -46,74 +59,170 @@ a {
 // Components
 //
 
+// NavBar
+
+.navbar {
+    width:4vw;
+    height:100vh;
+    top:0;
+    left:0;
+    background-color: $BrewBlack!important;
+    z-index:999;
+    position:fixed;
+    i {
+        color:rgba(255, 255, 255, 0.815);
+        font-size: 2vw;
+        margin:auto;
+        transition: all .4s ease;
+        &:hover {
+            color: white;
+            font-size: 2.2vw;
+        }
+    }
+    .navbar-brand {
+        color:white;
+        font-family: "Collegier";
+        font-size: 2.5vw;
+        margin:auto;
+    }
+    .dropdown-toggle:after{ 
+        content: none;
+    }
+    .dropdown-menu {
+        z-index:500;
+        margin-top: -100%;
+    }
+    .user-avatar {
+        height:5vh;
+        width:5vh;
+        overflow:hidden;
+        border-radius: 50%;
+        img {
+            height:100%;
+            min-width:auto;
+        }
+    }
+}
+
+
+
 // Page header
 
 .page-header-top {
     width:100%;
-    position:fixed;
-    top:5vh;
-    left:0;
-    z-index:100;
-    background-color: #292929;
+    background: url("assets/images/layout/hop-bg.png") no-repeat $BrewOrange;
+    z-index:2;
     height:10vh;
-
+    position:fixed;
+    top:0;
     h1 {
-        font-family: "Bebas";
+        font-family: "CabbageTown";
         color: white;
     }
-}
-
-.page-header-sub {
-    color: white;
-    margin-top:15vh;
-    height:15vh;
-    background-color: #292929;
 }
 
 //
 // Template 
 //
 
-$navbarHeight: 5vh;
-
-.navbar {
-    z-index:100;
-    position:fixed;
-    width:100%;
-    top:0;
-    left:0;
-    height:$navbarHeight;
-}
-
 .container-fluid {
+    margin-left:9vw;
     width:85vw;
 }
 
-.container-fluid-admin {
-    margin-top: $navbarHeight;
+//
+// Forms
+//
+
+.formRecipe {
+    width:50%;
+    label {
+        font-weight: bold;
+    }
+    ul {
+        list-style: none;
+    }
 }
 
 //
 // Recipes
 //
 
-.recipe-card {
-    width:95%;
-    box-shadow: .1vw .1vw rgba(0,0,0,.5);
+.recipes-list {
+    height: 93vh;
+}
+
+.card.recipe-card {
+    font-family: "Roboto", sans-serif;
+    position:relative;
+    height:65vh;
+    border: 1px solid rgba(0,0,0,.2);
     transition: all .4s ease;
     &:hover {
         box-shadow: .3vw .3vw rgba(0,0,0,.5);
     }
     .card-title {
-        font-family: 'Bebas';
+        font-family: 'Fonters';
         font-size: 2vw;
-        color: hsl(240, 41%, 16%);
     }
     .author {
-        font-family: "Jinky";
-        font-size: 2vw;
+        font-family: "Segoe UI";
+        color:rgba(255,255,255,.5);
+        font-size: 1vw;
     }
-    i {
-        font-size:3vw;
+    .card-content {
+        flex-grow: 1;
+        background-image: url('../assets/images/layout/malt.png');
+        background-size:70%;
+        background-repeat: no-repeat;
+        background-position: bottom right;
+        .recipe-icons{
+            .thumbs-up {
+                position:relative;
+                span {
+                    position:absolute;
+                    top:40%;
+                    left:50%;
+                    font-size:1.5vw;
+                    font-weight: bold;
+                }
+            }
+        }
+        .alcohol {
+            font-size: 4vw;
+        }
+        i {
+            font-size:5vw;
+        }
+        .fa-quote-left, .fa-quote-right {
+            font-size:2vw;
+        }
+    }
+    .card-footer {
+        .recipe-avatar {
+            height:3vw;
+            width: 3vw;
+            overflow:hidden;
+            border-radius:50%;
+            img {
+                height:3vw;
+                min-width:auto;
+            }
+        }
+    }
+}
+
+//
+// User Edit Profile
+//
+
+.edit-profile-avatar {
+    width:7vw;
+    height:7vw;
+    overflow:hidden;
+    border-radius:50%;
+    img {
+        height:100%;
+        min-width:auto;
     }
 }

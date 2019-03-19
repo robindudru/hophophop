@@ -27,6 +27,9 @@ class RecipeHopsType extends AbstractType
                 'class' => Hop::class,
                 'placeholder'=> 'Choisis un houblon',
                 'choice_label' => 'name',
+                'group_by' => function($val, $key, $index) {
+                    return $val->getType()->getName();
+                },
             ])
         ;
     }

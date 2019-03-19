@@ -6,6 +6,10 @@ class AddCollectionTypeField {
                 break;
             case 'hops':
                 this.buttonLabel = 'Houblon';
+                break;
+            case 'others':
+                this.buttonLabel = 'Autre ingrédient';
+                break;
         }
         this.collectionHolder = $(`ul.${type}`);
         this.FormLi = this.collectionHolder.find('li');
@@ -49,3 +53,4 @@ class AddCollectionTypeField {
 
 var maltFields = new AddCollectionTypeField('malts');
 var hopFields = new AddCollectionTypeField('hops');
+var otherFields = new AddCollectionTypeField('others');
