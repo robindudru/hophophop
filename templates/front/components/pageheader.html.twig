@@ -1,17 +1,43 @@
 <div class="row no-gutters page-header-top px-5 py-3">
-    <h1 class="fs-3 px-5 my-auto">
-        {% if recipe is defined %}
-        {{recipe.title}}
-        {% endif %}
-        {% if recipes is defined %}
-        Recettes de biere
-        {% endif %}
-        {% if formRecipe is defined %}
-            {% if edit %}
-                Editer une recette
-            {% else %}
-                Ajouter une recette
+    {% if recipesFilter is defined %}
+    <div class="col">
+    {% else %}
+    <div>
+    {% endif %}
+        <h1 class="fs-3 px-5 my-auto">
+            {% if recipe is defined %}
+            {{recipe.title}}
             {% endif %}
+            {% if recipes is defined %}
+            Recettes de biere
+            {% endif %}
+            {% if formRecipe is defined %}
+                {% if edit %}
+                    Editer une recette
+                {% else %}
+                    Ajouter une recette
+                {% endif %}
+            {% endif %}
+        </h1>
+    </div>
+    <div class="col">
+        {% if recipesFilter is defined %}
+            {{form_start(recipesFilter)}}
+            <div class="row mt-3">
+                <div class="col">
+                    {{ form_row(recipesFilter.style) }}
+                </div>
+                <div class="col">
+                    {{ form_row(recipesFilter.method) }}
+                </div>
+                <div class="col">
+                    {{ form_row(recipesFilter.difficulty) }}
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-success">Filtrer</button>
+                </div>
+            </div>
+            {{form_end(recipesFilter)}}
         {% endif %}
-    </h1>
+    </div>
 </div>

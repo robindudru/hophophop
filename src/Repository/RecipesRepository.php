@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Recipes;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\RecipesFilter;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Recipes|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,7 +19,44 @@ class RecipesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Recipes::class);
     }
+    
+    public function findAllRecipesQuery(RecipesFilter $filter)
+    {
+        $query=  $this->findRecipesQuery();
+        
+        if($filter->getStyle()) {
+            $query = $query
+                ->where('p.style = :style')
+                ->setParameter('style', $filter->getStyle());
+        }
 
+        if($filter->getMethod()) {
+            $query = $query
+                ->where('p.method = :method')
+                ->setParameter('method', $filter->getMethod());
+        }
+
+        if($filter->getDifficulty()) {
+            if ($filter->getDifficulty() == 'beginner') {
+                $query = $query
+                    ->where('p.method = :method')
+                    ->setParameter('method', 'kit');
+            }
+            else if ($filter->getDifficulty() == 'confirmed') {
+                $query = $query->where('ARRAY_LENGTH(p.recipeHops) = 1');
+            }
+            else if($filter->getDifficulty() == 'expert') {
+                $query = $query->where('ARRAY_LENGTH(p.recipeHops) > 1');
+            }
+        }
+        
+        return $query->getQuery();
+    }
+
+    private function findRecipesQuery()
+    {
+        return $this->createQueryBuilder('p');
+    }
     // /**
     //  * @return Recipes[] Returns an array of Recipes objects
     //  */

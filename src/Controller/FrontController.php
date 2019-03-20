@@ -7,8 +7,11 @@ use App\Form\RecipeType;
 use App\Entity\RecipeHops;
 use App\Entity\RecipeMalts;
 use App\Entity\RecipeOthers;
+use App\Entity\RecipesFilter;
 use App\Form\EditProfileType;
+use App\Form\RecipesFilterType;
 use App\Repository\RecipesRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,21 +31,30 @@ class FrontController extends AbstractController
         return $this->render('front/home.html.twig', [
             'title' => 'Bienvenue les cocos',
             'user' => $user,
-            'headerText' => 'Blah blah blah'
         ]);
     }
 
     /**
      * @Route("/recettes", name="recipes")
      */
-    public function recipes(RecipesRepository $repo)
+    public function recipes(RecipesRepository $repo, PaginatorInterface $paginator, Request $request)
     {
         $user = $this->getUser();
-        $recipes = $repo->findAll();
+
+        $filter = new RecipesFilter();
+        $form = $this->createForm(RecipesFilterType::class, $filter);
+        $form->handleRequest($request);
+
+        $recipes = $paginator->paginate(
+            $repo->findAllRecipesQuery($filter),
+            $request->query->getInt('page', 1),
+            18
+        );
+
         return $this->render('front/recipes.html.twig', [
             'recipes' => $recipes,
             'user' => $user,
-            'headerText' => 'Blah blah blah'
+            'recipesFilter' => $form->createView()
         ]);
     }
 

@@ -3,6 +3,7 @@
 {% block title %}Recettes de bière{% endblock %}
 
 {% block body %}
+<div class="container-fluid main-content justify-content-center">
 <section class="row recipes-list mx-auto pt-1">
 {% for recipe in recipes %}
     <article class="col-4 mt-5">
@@ -53,5 +54,9 @@
         </div>
     </article>
 {% endfor %}
+    <div class="pagination">
+        <div class="mx-auto">{{ knp_pagination_render(recipes) }}
+    </div>
 </section>
+</div>
 {% endblock %}

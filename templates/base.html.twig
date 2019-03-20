@@ -54,10 +54,9 @@
             </div>
         </nav>
         {% block pageheader %}{{ include('front/components/pageheader.html.twig') }}{% endblock %}
-        <div class="container-fluid main-content justify-content-center">
             
             {% block body %}{% endblock %}
-        </div>
+        
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}

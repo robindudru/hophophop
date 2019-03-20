@@ -55,6 +55,11 @@ a {
 // Determines Beer Color
 @import 'ebc';
 
+//Applies font 
+.collegier {
+    font-family: "Collegier";
+}
+
 //
 // Components
 //
@@ -209,6 +214,36 @@ a {
                 min-width:auto;
             }
         }
+    }
+}
+
+.pagination{
+    width:100%;
+    margin: 2vw 0;
+}
+
+//
+// Recipe
+//
+
+.recipe-wrapper {
+    margin-top: 12vh;
+    width: 96vw;
+    margin-left:4vw;
+    .main-recipe {
+        i {
+            font-size: 3vw;
+        }
+        .fa-thumbs-up {
+            transition: all .5s ease;
+            &:hover {
+                color: #3c3c6d;
+            }
+        }
+    }
+    .side-recipe {
+        height: 86vh;
+        border-left:1px solid lightgrey;
     }
 }
 

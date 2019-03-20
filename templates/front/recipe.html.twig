@@ -5,7 +5,52 @@
 {% block pageheader %}{{ include('front/components/pageheader.html.twig') }}{% endblock %}
 
 {% block body %}
-<h1>{{ recipe.title }}</h1>
-<span class="text-muted">le {{ recipe.createdAt | date('d/m/Y')}}</span>
-<p>{{ recipe.style.name }}</p>
+<div class="row no-gutters recipe-wrapper">
+    <section class="col-9 main-recipe">
+        <div class="row no-gutters text-center">
+            <div class="col">
+                <i class="fas fa-fill-drip"></i>
+                <span class="fs-3">{{recipe.batchSize}}L</span>
+            </div>
+            <div class="col">
+                <i class="fas fa-glass-cheers"></i>
+                <span class="fs-3">{{recipe.alcohol}}%</span>
+            </div>
+            <div class="col">
+                <i class="fas fa-beer ebc-{{recipe.color}}"></i>
+                <span class="fs-3">{{recipe.color}}EBC</span>
+            </div>
+            <div class="col">
+                <i class="fas fa-thumbs-up"></i>
+                <span class="fs-3">{{recipe.thumbsUp}}</span>
+            </div>
+        </div>
+        <div class="row no-gutters text-center">
+            <div class="col">
+                <span class="collegier fs-3"><span class="mr-3">brassage</span>
+                {% if recipe.method == 'kit' %}
+                <span class="mr-3">en</span>kit
+                {% elseif recipe.method == 'allgrain' %}
+                <span class="mr-3">tout</span> grain
+                {% endif %}
+                </span>
+            </div>
+            <div class="col">
+                <span class="collegier fs-3">{{recipe.style.name}}</span>
+            </div>
+            <div class="col">
+            {% if recipe.recipeHops|length >  1 %}
+                <span class="collegier fs-3">expert</span>
+            {% elseif recipe.recipeHops|length == 1 %}
+                <span class="collegier fs-3">confirme</span>
+            {% else %}
+                <span class="collegier fs-3">debutant</span>
+            {% endif %}
+            </div>
+        </div>
+    </section>
+    <aside class="col-3 side-recipe">
+    Allo?
+    </aside>
+</div>
 {% endblock %}
