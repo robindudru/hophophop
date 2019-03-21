@@ -17,7 +17,7 @@ class AddCollectionTypeField {
             this.addFormDeleteLink(this.FormLi[i]);
         };
         this.addButton = $(`<a href="#" class="btn btn-info">Ajouter un ${this.buttonLabel}</a>`);
-        this.newLinkLi = $('<li></li>').append(this.addButton);
+        this.newLinkLi = $('<li class="text-center"></li>').append(this.addButton);
         this.collectionHolder.append(this.newLinkLi);
         this.collectionHolder.data('index', this.collectionHolder.find(':input').length);
         this.addButton.click((e) => {
@@ -41,7 +41,7 @@ class AddCollectionTypeField {
     }
 
     addFormDeleteLink(FormLi) {
-        let removeFormButton = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+        let removeFormButton = $('<a href="#" class="btn btn-danger text-right mb-5">Supprimer <i class="fas fa-times"></i></a>');
         $(FormLi).append(removeFormButton);
 
         removeFormButton.click((e) => {

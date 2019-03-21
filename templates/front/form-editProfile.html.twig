@@ -3,7 +3,7 @@
 {% form_theme formEditProfile 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
-
+<div class="main-content formRecipe">
 {{ form_start(formEditProfile) }}
 
 {{ form_row(formEditProfile.email) }}
@@ -18,5 +18,5 @@
 </div>
 <button type="submit" class="btn btn-success">Modifier</button>
 {{ form_end(formEditProfile) }}
-
+</div>
 {% endblock %}

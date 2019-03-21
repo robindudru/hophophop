@@ -5,6 +5,7 @@
 {% block body %}
 <h1>Connexion</h1>
 
+<div class="main-content">
 <form method="post" action="{{ path('security_login') }}">
     <div class="form-group">
         <input type="email" class="form-control" placeholder="Email" name="_username" required>
@@ -16,5 +17,5 @@
         <button type="submit" class="btn btn-success">Connexion</button>
     </div>
 </form>
-
+</div>
 {% endblock %}

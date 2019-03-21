@@ -5,52 +5,286 @@
 {% block pageheader %}{{ include('front/components/pageheader.html.twig') }}{% endblock %}
 
 {% block body %}
-<div class="row no-gutters recipe-wrapper">
-    <section class="col-9 main-recipe">
-        <div class="row no-gutters text-center">
+<div class="row no-gutters recipe-wrapper mb-5">
+    <section class="col-9 main-recipe px-5">
+        <div class="row no-gutters">
             <div class="col">
-                <i class="fas fa-fill-drip"></i>
-                <span class="fs-3">{{recipe.batchSize}}L</span>
+                <div class="row no-gutters text-right">
+                    <div class="col">
+                        <i class="fas fa-fill-drip"></i>
+                        <span class="fs-3">{{recipe.batchSize}}L</span>
+                    </div>
+                    <div class="col">
+                        <i class="fas fa-glass-cheers"></i>
+                        <span class="fs-3">{{recipe.alcohol}}%</span>
+                    </div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col text-right">
+                        <span class="collegier fs-3">
+                            {% if recipe.method == 'kit' %}
+                            <span class="mr-3">brassage</span>kit
+                            {% elseif recipe.method == 'allgrain' %}
+                            <span class="mr-3">tout</span> grain
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 recipe-hop-icon">
+                <img src="{{ asset('build/layout/hop.png')}}" />
             </div>
             <div class="col">
-                <i class="fas fa-glass-cheers"></i>
-                <span class="fs-3">{{recipe.alcohol}}%</span>
-            </div>
-            <div class="col">
-                <i class="fas fa-beer ebc-{{recipe.color}}"></i>
-                <span class="fs-3">{{recipe.color}}EBC</span>
-            </div>
-            <div class="col">
-                <i class="fas fa-thumbs-up"></i>
-                <span class="fs-3">{{recipe.thumbsUp}}</span>
+                <div class="row no-gutters">
+                    <div class="col">
+                        <i class="fas fa-beer ebc-{{recipe.color}}"></i>
+                        <span class="fs-3">{{recipe.color}}EBC</span>
+                    </div>
+                    <div class="col">
+                        <i class="fas fa-thumbs-up"></i>
+                        <span class="fs-3">{{recipe.thumbsUp}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span class="collegier fs-3"><span class="mr-3">biere</span>{{recipe.style.name}}</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row no-gutters text-center">
-            <div class="col">
-                <span class="collegier fs-3"><span class="mr-3">brassage</span>
-                {% if recipe.method == 'kit' %}
-                <span class="mr-3">en</span>kit
-                {% elseif recipe.method == 'allgrain' %}
-                <span class="mr-3">tout</span> grain
+        {% if recipe.mashGuide is not empty %}
+        <div class="row mt-5">
+            <h2 class="collegier fs-2"><span class="mr-2">notes</span><span class="mr-2">du</span>brasseur</h2>
+        </div>
+        <div class="row text-justify">
+            {{recipe.mashGuide}}
+        </div>
+        {% endif %}
+        {% if recipe.method != 'kit' %}
+        <div class="row mt-5">
+            <h2 class="collegier fs-2"><span class="mr-2">empatage</h2>
+        </div>
+        <div class="row alert alert-info alert-dismissable fade show text-justify">
+            <p>
+                <div class="col fs-1 mx-0 px-0 mb-2"><b>Notes de BrewMate</b></div>
+                <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+            </p>
+            <p>La technique d'empâtage de la bière peut varier d'une bière à l'autre. Certains brasseurs choisissent de pratiquer la chauffe en plusieurs paliers de températures
+            pour avoir un contrôle fin et précis de leur maïsche (le liquide obtenu après empâtage).</p>
+            <p>Si le brasseur n'a pas précisé de méthode d'empâtage ou si tu veux simplifier la recette, tu peux te contenter de chauffer la quantité de grain nécessaire à 68°
+            pendant environ 90mn. C'est la "base" de tout empâtage (et ce sera quand même très bon).</p>
+        </div>
+        <div class="row no-gutters mt-2">
+            <span class="fs-1"><b>Liste des malts</b></span>
+        </div>
+        <div class="row no-gutters my-3 malts-header">
+            <div class="col-2">
+                Poids (en kg)
+            </div>
+            <div class="col-5">
+                Nom
+            </div>
+            <div class="col-2">
+                Valeur EBC
+            </div>
+            <div class="col-3">
+               Commander <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+        {% for malt in recipe.recipeMalts %}
+        <div class="row no-gutters">
+            <div class="col-2">
+                {{ malt.weight }}
+            </div>
+            <div class="col-5">
+                {{ malt.malt.name }}
+            </div>
+            <div class="col-2">
+                {{ malt.malt.ebc }}
+            </div>
+            <div class="col-3">
+                {% if malt.malt.SBUrl is not empty %}
+                <div class="d-inline shopping-notempty mr-2">
+                    <a href="{{malt.malt.SBUrl}}" target="_blank" title="Acheter sur Saveur Bière" ><img src="{{asset('build/layout/sb.jpg')}}" alt="Acheter du malt {{ malt.malt.name }} sur Saveur Bière" /></a>
+                </div>
+                {% elseif malt.malt.SBUrl is empty %}
+                <div class="d-inline shopping-empty mr-2">
+                    <img src="{{asset('build/layout/sb.jpg')}}" title="Indisponible sur Saveur Bière" />
+                </div>
                 {% endif %}
-                </span>
-            </div>
-            <div class="col">
-                <span class="collegier fs-3">{{recipe.style.name}}</span>
-            </div>
-            <div class="col">
-            {% if recipe.recipeHops|length >  1 %}
-                <span class="collegier fs-3">expert</span>
-            {% elseif recipe.recipeHops|length == 1 %}
-                <span class="collegier fs-3">confirme</span>
-            {% else %}
-                <span class="collegier fs-3">debutant</span>
-            {% endif %}
+                 {% if malt.malt.BLUrl is not empty %}
+                <div class="d-inline shopping-notempty">
+                    <a href="{{malt.malt.BLUrl}}" target="_blank" title="Acheter sur Brouwland" ><img src="{{asset('build/layout/bl.png')}}" alt="Acheter du malt {{ malt.malt.name }} sur Brouwland" /></a>
+                </div>
+                {% elseif malt.malt.BLUrl is empty %}
+                <div class="d-inline shopping-empty">
+                    <img src="{{asset('build/layout/bl.png')}}" title="Indisponible sur Brouwland" />
+                </div>
+                {% endif %}
             </div>
         </div>
+        {% endfor %}
+        <div class="row mt-5">
+            <h2 class="collegier fs-2"><span class="mr-2">ebullition</h2>
+        </div>
+        <div class="row alert alert-info alert-dismissable fade show text-justify">
+            <p>
+                <div class="col fs-1 mx-0 px-0 mb-2"><b>Notes de BrewMate</b></div>
+                <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+            </p>
+            <p>L'ébullition consiste à faire bouillir le moût et à y ajouter les houblons. Chaque houblon doit être ajouté pendant un certain temps pour conférer à la bière ses
+            arômes et son amertume. Quelques minutes de plus ou de moins dans le moût et ta bière peut changer de goût (et là pas de panique, elle est sûrement toujours bonne !
+            C'est le moment de noter ce que tu as fait... et d'ajouter une nouvelle recette sur BrewMate !)</p>
+            <p>Il est aussi possible d'ajouter des houblons pendant la fermentation (plutôt la secondaire, si tu en fais une).</p>
+            <p>Si le temps d'ébullition d'un houblon est à 0, c'est qu'il faut pratiquer ce houblonnage "à cru". Reporte toi aux notes du brasseur.</p>
+        </div>
+        <div class="row no-gutters mt-2">
+            <span class="fs-1"><b>Liste des houblons</b></span>
+        </div>
+        <div class="row no-gutters my-3 malts-header">
+            <div class="col-1">
+                Poids (en g)
+            </div>
+            <div class="col-2">
+                Profil
+            </div>
+            <div class="col-4">
+                Nom
+            </div>
+            <div class="col-2">
+                Acides Alpha
+            </div>
+            <div class="col-1">
+                Durée
+            </div>
+            <div class="col-2">
+               Commander <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+        {% for hop in recipe.recipeHops %}
+        <div class="row no-gutters">
+            <div class="col-1">
+                {{ hop.weight }}
+            </div>
+            <div class="col-2">
+                {{ hop.hop.type.name }}
+            </div>
+            <div class="col-4">
+                {{ hop.hop.name }}
+            </div>
+            <div class="col-2">
+                {{ hop.hop.alphaAcid }}
+            </div>
+            <div class="col-1">
+                {{ hop.boilTime }}mn
+            </div>
+            <div class="col-2">
+                {% if hop.hop.SBUrl is not empty %}
+                <div class="d-inline shopping-notempty mr-2">
+                    <a href="{{hop.hop.SBUrl}}" target="_blank" title="Acheter sur Saveur Bière" ><img src="{{asset('build/layout/sb.jpg')}}" alt="Acheter du houblon {{ hop.hop.name }} sur Saveur Bière" /></a>
+                </div>
+                {% elseif hop.hop.SBUrl is empty %}
+                <div class="d-inline shopping-empty mr-2">
+                    <img src="{{asset('build/layout/sb.jpg')}}" title="Indisponible sur Saveur Bière" />
+                </div>
+                {% endif %}
+                 {% if hop.hop.BLUrl is not empty %}
+                <div class="d-inline shopping-notempty">
+                    <a href="{{hop.hop.BLUrl}}" target="_blank" title="Acheter sur Brouwland" ><img src="{{asset('build/layout/bl.png')}}" alt="Acheter du houblon {{ hop.hop.name }} sur Brouwland" /></a>
+                </div>
+                {% elseif hop.hop.BLUrl is empty %}
+                <div class="d-inline shopping-empty">
+                    <img src="{{asset('build/layout/bl.png')}}" title="Indisponible sur Brouwland" />
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if recipe.recipeOthers is not empty %}
+        <div class="row alert alert-info alert-dismissable fade show text-justify">
+            <p>
+                <div class="col fs-1 mx-0 px-0 mb-2"><b>Notes de BrewMate</b></div>
+                <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+            </p>
+            <p>Il est possible d'ajouter autre chose que du houblon pendant l'ébullition ou la fermentation, comme des fruits ou des clarifiants</p>
+            <p>Reporte toi aux notes du brasseur pour plus de détails !</p>
+        </div>
+        <div class="row no-gutters mt-2">
+            <span class="fs-1"><b>Liste des autres ingrédients</b></span>
+        </div>
+        <div class="row no-gutters my-3 malts-header">
+            <div class="col-2">
+                Poids (en g)
+            </div>
+            <div class="col-5">
+                Nom
+            </div>
+            <div class="col-2">
+                Durée
+            </div>
+            <div class="col-3">
+               Commander <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+        {% for other in recipe.recipeOthers %}
+        <div class="row no-gutters">
+            <div class="col-2">
+                {{ other.weight }}
+            </div>
+            <div class="col-5">
+                {{ other.otherIngredient.name }}
+            </div>
+            <div class="col-2">
+                {{ other.boilTime }}
+            </div>
+            <div class="col-3">
+                {% if other.otherIngredient.SBUrl is not empty %}
+                <div class="d-inline shopping-notempty mr-2">
+                    <a href="{{other.otherIngredient.SBUrl}}" target="_blank" title="Acheter sur Saveur Bière" ><img src="{{asset('build/layout/sb.jpg')}}" alt="Acheter {{ other.otherIngredient.name }} sur Saveur Bière" /></a>
+                </div>
+                {% elseif other.otherIngredient.SBUrl is empty %}
+                <div class="d-inline shopping-empty mr-2">
+                    <img src="{{asset('build/layout/sb.jpg')}}" title="Indisponible sur Saveur Bière" />
+                </div>
+                {% endif %}
+                 {% if other.otherIngredient.BLUrl is not empty %}
+                <div class="d-inline shopping-notempty">
+                    <a href="{{other.otherIngredient.BLUrl}}" target="_blank" title="Acheter sur Brouwland" ><img src="{{asset('build/layout/bl.png')}}" alt="Acheter {{ other.otherIngredient.name }} sur Brouwland" /></a>
+                </div>
+                {% elseif other.otherIngredient.BLUrl is empty %}
+                <div class="d-inline shopping-empty">
+                    <img src="{{asset('build/layout/bl.png')}}" title="Indisponible sur Brouwland" />
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endif %}
     </section>
-    <aside class="col-3 side-recipe">
-    Allo?
+
+    <aside class="col-3 side-recipe px-3">
+        <div class="row">
+            <div class="col-2">
+                <div class="recipe-avatar">
+                    <img src="{{asset('build/avatars/')}}{{recipe.author.avatar}}" alt="Avatar de {{recipe.author.username}}" />
+                </div>
+            </div>
+            <div class="col-10 pl-4">
+                <h2 class="fs-2 collegier mb-0">{{recipe.author.username}}</h2>
+                <span class="text-muted pl-1">ajoutée le {{ recipe.createdAt|date('d/m/Y') }}</span>
+                {% if recipe.author == user %}
+                <div class="row pl-3">
+                        <a href="{{path('edit_recipe', {'id': recipe.id})}}"><span class="badge badge-info mr-3">EDITER</span></a>
+                        <a href="{{path('delete_recipe', {'id': recipe.id})}}"><span class="badge badge-danger">SUPPRIMER</span></a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+        
+        </div>
     </aside>
 </div>
 {% endblock %}

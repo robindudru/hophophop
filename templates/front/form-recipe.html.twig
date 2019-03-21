@@ -4,51 +4,100 @@
 
 {% form_theme formRecipe 'bootstrap_4_layout.html.twig' %}
 
-
-
 {% block body %}
-<div class="formRecipe mt-5">
-    {{ form_start(formRecipe) }}
-        {{ form_row(formRecipe.title)}}
-        {{ form_row(formRecipe.style)}}
-        {{ form_row(formRecipe.method)}}
-        <label for="recipeMalts">Malts</label>
-        <ul class="malts" data-prototype="{{ form_widget(formRecipe.recipeMalts.vars.prototype)|e('html_attr') }}">
-        {% for malt in formRecipe.recipeMalts %}
-                <li>{{ form_row(malt.weight) }}
-                {{ form_row(malt.malt) }}</li>
-        {% endfor %}
-        </ul>
-        <label for="recipeHops">Houblons</label>
-        <ul class="hops" data-prototype="{{ form_widget(formRecipe.recipeHops.vars.prototype)|e('html_attr') }}">
-        {% for hop in formRecipe.recipeHops %}
-                <li>{{ form_row(hop.weight) }}
-                {{ form_row(hop.hop) }}
-                {{ form_row(hop.boilTime) }}
-                {{ form_row(hop.version) }}</li>
-        {% endfor %}
-        </ul>
-        <label for="recipeOthers">Autres ingrédients</label>
-        <ul class="others" data-prototype="{{ form_widget(formRecipe.recipeOthers.vars.prototype)|e('html_attr') }}">
-        {% for other in formRecipe.recipeOthers %}
-                <li>{{ form_row(other.weight) }}
-                {{ form_row(other.otherIngredient) }}</li>
-        {% endfor %}
-        </ul>
-        {{ form_row(formRecipe.yeast)}}
-        {{ form_row(formRecipe.boilTime)}}
-        {{ form_row(formRecipe.batchSize)}}
-        {{ form_row(formRecipe.originalGravity)}}
-        {{ form_row(formRecipe.finalGravity)}}
-        {{ form_row(formRecipe.mashGuide)}}
-    <button type="submit" class="btn btn-success">
-        {% if edit %}
-            Modifier
-        {% else %}
-            Ajouter
-        {% endif %}
-    </button>
+<div class="container-form row">
+    
+    <div class="col-9 formRecipe">
+        <div class="row alert alert-info alert-dismissable fade show text-justify">
+            <p>
+                <div class="col fs-1 mx-0 px-0 mb-2"><b>A noter</b></div>
+                <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+            </p>
+            <p>Pour un kit, pas besoin de préciser les ingrédients ! (ils ne s'afficheront pas dans la recette). Tu peux préciser les éventuelles modifications que tu apportes au kit
+            dans les notes.</p>
+        </div>
+        {{ form_start(formRecipe) }}
+            <div class="row no-gutters">
+                <span class="collegier fs-2"><span class="mr-3">informations</span>generales</span>
+            </div>
+            {{ form_row(formRecipe.title)}}
+            {{ form_row(formRecipe.description)}}
+            <div class="row no-gutters">
+                <div class="col mr-2">
+                    {{ form_row(formRecipe.method)}}
+                </div>
+                <div class="col ml-2">
+                    {{ form_row(formRecipe.style)}}
+                </div>
+            </div>
+            {{ form_row(formRecipe.boilTime)}}
+            {{ form_row(formRecipe.batchSize)}}
+            {{ form_row(formRecipe.originalGravity)}}
+            {{ form_row(formRecipe.finalGravity)}}
+            <div class="row no-gutters mt-5">
+                <span class="collegier fs-2">ingredients</span>
+            </div>
+            <div class="row no-gutters">
+                <div class="col">
+                    <label for="recipeMalts">Malts</label>
+                    <ul class="malts" data-prototype="{{ form_widget(formRecipe.recipeMalts.vars.prototype)|e('html_attr') }}">
+                    {% for malt in formRecipe.recipeMalts %}
+                            <li>{{ form_row(malt.weight) }}
+                            {{ form_row(malt.malt) }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                <div class="col">
+                    <label for="recipeHops">Houblons</label>
+                    <ul class="hops" data-prototype="{{ form_widget(formRecipe.recipeHops.vars.prototype)|e('html_attr') }}">
+                    {% for hop in formRecipe.recipeHops %}
+                            <li>{{ form_row(hop.weight) }}
+                            {{ form_row(hop.hop) }}
+                            {{ form_row(hop.boilTime) }}
+                            {{ form_row(hop.version) }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                <div class="col">
+                    <label for="recipeOthers">Autres ingrédients</label>
+                    <ul class="others" data-prototype="{{ form_widget(formRecipe.recipeOthers.vars.prototype)|e('html_attr') }}">
+                    {% for other in formRecipe.recipeOthers %}
+                            <li>{{ form_row(other.weight) }}
+                            {{ form_row(other.otherIngredient) }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {{ form_row(formRecipe.yeast)}}
+            <div class="row no-gutters mt-5">
+                <span class="collegier fs-2"><span class="mr-3"><span class="mr-3">notes</span>complementaires</span>
+            </div>
+            {{ form_row(formRecipe.mashGuide)}}
+            <div class="row mt-4">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-success">
+                        {% if edit %}
+                            Modifier cette recette
+                        {% else %}
+                            Ajouter cette recette
+                        {% endif %}
+                    </button>
+                </div>
+            </div>
+        {{ form_end(formRecipe) }}
+    </div>
+    <div class="col-3 pl-5 formRecipe-aside">
+        <div class="row alert alert-secondary text-justify">
+            <p>
+                <div class="col fs-1 mx-0 px-0 mb-2"><b>Bon à savoir</b></div>
+            </p>
+            <p>Pas besoin de renseigner le degré d'alcool ou la couleur de la bière, ils seront calculés automatiquement !</p>
+            <p>Si un ingrédient ne se trouve pas dans la liste, tu peux l'ajouter à la base de données. Il sera ensuite validé par un des modérateurs avant d'être intégré et 
+            rendu accessible par tous les membres.</p>
+            <p>Avant d'ajouter une recette de kit, vérifie qu'il n'ait pas déjà été ajouté par un autre brasseur. Si tu modifies radicalement ce kit, précise-le dans le titre ou la
+            description ! (ex: BADASS Munton's American Style Lager (un super nom)).</p>
+        </div>
+    </div>
 </div>
-{{ form_end(formRecipe) }}
 
 {% endblock %}

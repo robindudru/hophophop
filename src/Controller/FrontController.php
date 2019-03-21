@@ -112,6 +112,36 @@ class FrontController extends AbstractController
     }
 
     /**
+     * @Route("recette/{id}/supprimer", name="delete_recipe")
+     */
+    public function deleteRecipe(Recipes $recipe, Request $request, ObjectManager $manager) {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $user = $this->getUser();
+
+        $form = $this->createForm(RecipeType::class, $recipe); 
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($recipe->getAuthor() == $user) {
+                $manager->delete($recipe);
+                $manager->flush();
+            }
+            else {
+                throw new Exception('Tututut, c\'est pas ta recette !');
+            }
+           return $this->redirectToRoute('recipes', ['delete' => 'Ta recette a bien supprimée !']);
+        }
+        else {
+            return $this->render('front/delete.html.twig', [
+                'formDelete' => $form->createView(),
+                'user' => $user
+            ]);
+        }
+    }
+
+    /**
      * @Route("/recette/{id}", name="recipe")
      */
     public function recipe(Recipes $recipe)

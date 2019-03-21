@@ -1,30 +1,6 @@
 //
 // General
 //
-
-$BrewOrange: #e96e53;
-$CardColor: #474756;
-$BrewBlack: #383843;
-
-body {
-    position:relative;
-}
-
-.main-content {
-    position:relative;
-    margin-left: 4vw;
-    margin-top: 7vh;
-    width:96vw;
-}
-
-a {
-    color:black;
-    &:hover {
-        color:black;
-        text-decoration: none;
-    }
-}
-
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 @font-face {
@@ -42,6 +18,33 @@ a {
     src: url("assets/fonts/Fonters.otf"),
          url("assets/fonts/Fonters.ttf");
 }
+
+$BrewOrange: #e96e53;
+$CardColor: #474756;
+$BrewBlack: #383843;
+
+body {
+    position:relative;
+    font-family: "Roboto";
+    overflow-x: hidden;
+}
+
+.main-content {
+    position:relative;
+    margin-left: 4vw;
+    margin-top: 7vh;
+    width:96vw;
+}
+
+a {
+    color:black;
+    &:hover {
+        color:black;
+        text-decoration: none;
+    }
+}
+
+
 
 //
 // Utilities
@@ -135,18 +138,30 @@ a {
     width:85vw;
 }
 
+.container-form {
+    margin-left: 6vw;
+    width: 92vw;
+}
+
 //
 // Forms
 //
 
 .formRecipe {
-    width:50%;
+    margin-top: 12vh;
     label {
         font-weight: bold;
     }
     ul {
         list-style: none;
     }
+    textarea {
+        height: 20vh;
+    }
+}
+
+.formRecipe-aside {
+    margin-top: 12vh;
 }
 
 //
@@ -227,7 +242,7 @@ a {
 //
 
 .recipe-wrapper {
-    margin-top: 12vh;
+    margin-top: 13vh;
     width: 96vw;
     margin-left:4vw;
     .main-recipe {
@@ -240,10 +255,43 @@ a {
                 color: #3c3c6d;
             }
         }
+        .recipe-hop-icon {
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+        .malts-header {
+            font-weight: bold;
+            .fa-shopping-cart {
+                font-size: .7vw;
+            }
+        }
+        .shopping-notempty, .shopping-empty {
+            img {
+                height: 2vh;
+                width: auto;
+            }
+        }
+        .shopping-empty {
+            img {
+                filter: grayscale(100%);
+            }
+        }
     }
     .side-recipe {
         height: 86vh;
         border-left:1px solid lightgrey;
+        .recipe-avatar {
+            width:4vw;
+            height:4vw;
+            overflow:hidden;
+            border-radius:50%;
+            img {
+                height: 4vw;
+                min-width: auto;
+            }
+        }
     }
 }
 

@@ -45,9 +45,15 @@ class RecipeType extends AbstractType
                 'choices' => [
                     'Kit' => 'kit',
                     'Tout Grain' => 'allgrain'
+                ],
+                'label' => 'Méthode de brassage',
+                'placeholder' => 'Choisis la méthode du brassage'
+            ])
+            ->add('description', TextareaType::class, [
+                'attr' => [
+                    'placeholder' => 'Une courte description de la recette qui s\'affichera dans la liste des recettes. Donne envie de brasser ta bière !'
                 ]
             ])
-            ->add('description')
             ->add('recipeMalts', CollectionType::class, [
                 'entry_type' => RecipeMaltsType::class,
                 'entry_options' => ['label' => false],
@@ -113,7 +119,7 @@ class RecipeType extends AbstractType
             ])
             ->add('mashGuide', TextareaType::class, [
                 'attr' => [
-                    'placeholder' => 'Notes additionnelles que tu souhaites ajouter'
+                    'placeholder' => 'Notes additionnelles que tu souhaites ajouter; des détails sur les ingrédients exotiques, des techniques alternatives ou des ingrédients de remplacement. Tu peux aussi dire bonjour, ça fait toujours plaisir.'
                 ],
                 'required' => false,
                 'label' => 'Notes sur le brassage'
