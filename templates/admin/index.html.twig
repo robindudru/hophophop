@@ -1,14 +1,242 @@
-{% extends 'admin.base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Administration{% endblock %}
 
 {% block body %}
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/webprojects/Dev Web Jr/hophophop/src/Controller/BackOfficeController.php'|file_link(0) }}">src/Controller/BackOfficeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/webprojects/Dev Web Jr/hophophop/templates/back_office/index.html.twig'|file_link(0) }}">templates/back_office/index.html.twig</a></code></li>
-    </ul>
+<div class="main-container admin-home">
+<div class="row">
+    <div class="col-10">
+        <div class="row mt-5">
+            <h2 class="collegier fs-2"><span class="mr-2">malts</span><span class="mr-2">a</span>valider</h2>
+        </div>
+        {% if malts is not empty %}
+        <div class="row no-gutters my-3 malts-header">
+            <div class="col-1">
+            </div>
+            <div class="col-4">
+                <b>Nom</b>
+            </div>
+            <div class="col-2">
+                <b>Type</b>
+            </div>
+            <div class="col-2">
+                <b>Valeur EBC</b>
+            </div>
+            <div class="col-3">
+                <b>Commander</b> <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+        {% for malt in malts %}
+        <div class="row no-gutters">
+            <div class="col-1">
+                <a href="{{ path('edit_malt', {'id': malt.id} ) }}" title="Editer"><i class="fas fa-edit mr-2"></i></a>
+                <a href="{{ path('delete_malt', {'id': malt.id} ) }}" title="Refuser"><i class="fas fa-times mr-2"></i></a>
+                <a href="{{ path('approve_malt', {'id': malt.id} ) }}" title="Valider"><i class="fas fa-check"></i></a>
+            </div>
+            <div class="col-4">
+                {{ malt.name }}
+            </div>
+            <div class="col-2">
+                {{ malt.type.name }}
+            </div>
+            <div class="col-2">
+                {{ malt.ebc }}
+            </div>
+            <div class="col-3">
+                {% if malt.SBUrl is not empty %}
+                <div class="d-inline shopping-notempty mr-2">
+                    <a href="{{malt.SBUrl}}" target="_blank" title="Acheter sur Saveur Bière" ><img src="{{asset('build/layout/sb.jpg')}}" alt="Acheter du malt {{ malt.name }} sur Saveur Bière" /></a>
+                </div>
+                {% elseif malt.SBUrl is empty %}
+                <div class="d-inline shopping-empty mr-2">
+                    <img src="{{asset('build/layout/sb.jpg')}}" title="Indisponible sur Saveur Bière" />
+                </div>
+                {% endif %}
+                    {% if malt.BLUrl is not empty %}
+                <div class="d-inline shopping-notempty">
+                    <a href="{{malt.BLUrl}}" target="_blank" title="Acheter sur Brouwland" ><img src="{{asset('build/layout/bl.png')}}" alt="Acheter du malt {{ malt.name }} sur Brouwland" /></a>
+                </div>
+                {% elseif malt.BLUrl is empty %}
+                <div class="d-inline shopping-empty">
+                    <img src="{{asset('build/layout/bl.png')}}" title="Indisponible sur Brouwland" />
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            <div class="alert alert-warning mt-4">
+                <b>Rien à faire !</b> Personne n'a soumis de malt.
+            </div>
+        {% endif %}
+        <div class="row mt-5">
+            <h2 class="collegier fs-2"><span class="mr-2">houblons</span><span class="mr-2">a</span>valider</h2>
+        </div>
+        {% if hops is not empty %}
+        <div class="row no-gutters my-3 malts-header">
+            <div class="col-1">
+            </div>
+            <div class="col-4">
+                <b>Nom</b>
+            </div>
+            <div class="col-2">
+                <b>Type</b>
+            </div>
+            <div class="col-2">
+                <b>Valeur AA</b>
+            </div>
+            <div class="col-3">
+                <b>Commander</b> <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+        {% for hop in hops %}
+        <div class="row no-gutters">
+            <div class="col-1">
+                <a href="{{ path('edit_hop', {'id': hop.id} ) }}" title="Editer"><i class="fas fa-edit mr-2"></i></a>
+                <a href="{{ path('delete_hop', {'id': hop.id} ) }}" title="Refuser"><i class="fas fa-times mr-2"></i></a>
+                <a href="{{ path('approve_hop', {'id': hop.id} ) }}" title="Valider"><i class="fas fa-check"></i></a>
+            </div>
+            <div class="col-4">
+                {{ hop.name }}
+            </div>
+            <div class="col-2">
+                {{ hop.type.name }}
+            </div>
+            <div class="col-2">
+                {{ hop.alphaAcid }}
+            </div>
+            <div class="col-3">
+                {% if hop.SBUrl is not empty %}
+                <div class="d-inline shopping-notempty mr-2">
+                    <a href="{{hop.SBUrl}}" target="_blank" title="Acheter sur Saveur Bière" ><img src="{{asset('build/layout/sb.jpg')}}" alt="Acheter du malt {{ hop.name }} sur Saveur Bière" /></a>
+                </div>
+                {% elseif hop.SBUrl is empty %}
+                <div class="d-inline shopping-empty mr-2">
+                    <img src="{{asset('build/layout/sb.jpg')}}" title="Indisponible sur Saveur Bière" />
+                </div>
+                {% endif %}
+                    {% if hop.BLUrl is not empty %}
+                <div class="d-inline shopping-notempty">
+                    <a href="{{malt.BLUrl}}" target="_blank" title="Acheter sur Brouwland" ><img src="{{asset('build/layout/bl.png')}}" alt="Acheter du malt {{ hop.name }} sur Brouwland" /></a>
+                </div>
+                {% elseif hop.BLUrl is empty %}
+                <div class="d-inline shopping-empty">
+                    <img src="{{asset('build/layout/bl.png')}}" title="Indisponible sur Brouwland" />
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            <div class="alert alert-warning mt-4">
+                <b>Rien à faire !</b> Personne n'a soumis de houblon.
+            </div>
+        {% endif %}
+        <div class="row mt-5">
+            <h2 class="collegier fs-2"><span class="mr-2">autres</span><span class="mr-2">ingredients</span><span class="mr-2">a</span>valider</h2>
+        </div>
+        {% if others is not empty %}
+        <div class="row no-gutters my-3 malts-header">
+            <div class="col-1">
+            </div>
+            <div class="col-8">
+                <b>Nom</b>
+            </div>
+            <div class="col-3">
+                <b>Commander</b> <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+        {% for other in others %}
+        <div class="row no-gutters">
+            <div class="col-1">
+                <a href="{{ path('edit_other', {'id': other.id} ) }}" title="Editer"><i class="fas fa-edit mr-2"></i></a>
+                <a href="{{ path('delete_other', {'id': other.id} ) }}" title="Refuser"><i class="fas fa-times mr-2"></i></a>
+                <a href="{{ path('approve_other', {'id': other.id} ) }}" title="Valider"><i class="fas fa-check"></i></a>
+            </div>
+            <div class="col-8">
+                {{ other.name }}
+            </div>
+            <div class="col-3">
+                {% if other.SBUrl is not empty %}
+                <div class="d-inline shopping-notempty mr-2">
+                    <a href="{{other.SBUrl}}" target="_blank" title="Acheter sur Saveur Bière" ><img src="{{asset('build/layout/sb.jpg')}}" alt="Acheter du malt {{ other.name }} sur Saveur Bière" /></a>
+                </div>
+                {% elseif other.SBUrl is empty %}
+                <div class="d-inline shopping-empty mr-2">
+                    <img src="{{asset('build/layout/sb.jpg')}}" title="Indisponible sur Saveur Bière" />
+                </div>
+                {% endif %}
+                    {% if other.BLUrl is not empty %}
+                <div class="d-inline shopping-notempty">
+                    <a href="{{other.BLUrl}}" target="_blank" title="Acheter sur Brouwland" ><img src="{{asset('build/layout/bl.png')}}" alt="Acheter du malt {{ other.name }} sur Brouwland" /></a>
+                </div>
+                {% elseif other.BLUrl is empty %}
+                <div class="d-inline shopping-empty">
+                    <img src="{{asset('build/layout/bl.png')}}" title="Indisponible sur Brouwland" />
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            <div class="alert alert-warning mt-4">
+                <b>Rien à faire !</b> Personne n'a soumis d'ingrédient.
+            </div>
+        {% endif %}
+        <div class="row mt-5">
+            <h2 class="collegier fs-2"><span class="mr-2">levures</span><span class="mr-2">a</span>valider</h2>
+        </div>
+        {% if yeasts is not empty %}
+        <div class="row no-gutters my-3 malts-header">
+            <div class="col-1">
+            </div>
+            <div class="col-8">
+                <b>Nom</b>
+            </div>
+            <div class="col-3">
+                <b>Commander</b> <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+        {% for yeast in yeasts %}
+        <div class="row no-gutters">
+            <div class="col-1">
+                <a href="{{ path('edit_yeast', {'id': yeast.id} ) }}" title="Editer"><i class="fas fa-edit mr-2"></i></a>
+                <a href="{{ path('delete_yeast', {'id': yeast.id} ) }}" title="Refuser"><i class="fas fa-times mr-2"></i></a>
+                <a href="{{ path('approve_yeast', {'id': yeast.id} ) }}" title="Valider"><i class="fas fa-check"></i></a>
+            </div>
+            <div class="col-8">
+                {{ yeast.name }}
+            </div>
+            <div class="col-3">
+                {% if yeast.SBUrl is not empty %}
+                <div class="d-inline shopping-notempty mr-2">
+                    <a href="{{yeast.SBUrl}}" target="_blank" title="Acheter sur Saveur Bière" ><img src="{{asset('build/layout/sb.jpg')}}" alt="Acheter du malt {{ yeast.name }} sur Saveur Bière" /></a>
+                </div>
+                {% elseif yeast.SBUrl is empty %}
+                <div class="d-inline shopping-empty mr-2">
+                    <img src="{{asset('build/layout/sb.jpg')}}" title="Indisponible sur Saveur Bière" />
+                </div>
+                {% endif %}
+                    {% if yeast.BLUrl is not empty %}
+                <div class="d-inline shopping-notempty">
+                    <a href="{{yeast.BLUrl}}" target="_blank" title="Acheter sur Brouwland" ><img src="{{asset('build/layout/bl.png')}}" alt="Acheter du malt {{ yeast.name }} sur Brouwland" /></a>
+                </div>
+                {% elseif yeast.BLUrl is empty %}
+                <div class="d-inline shopping-empty">
+                    <img src="{{asset('build/layout/bl.png')}}" title="Indisponible sur Brouwland" />
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            <div class="alert alert-warning mt-4">
+                <b>Rien à faire !</b> Personne n'a soumis de levure.
+            </div>
+        {% endif %}
+    </div>
+    <div class="col-2">
+        {{ include('admin/components/side-menu.html.twig') }}
+    </div>
 </div>
 {% endblock %}

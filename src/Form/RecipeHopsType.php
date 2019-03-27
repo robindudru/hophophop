@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Hop;
 use App\Entity\RecipeHops;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -42,6 +43,10 @@ class RecipeHopsType extends AbstractType
                 'label' => 'Houblon',
                 'group_by' => function($val, $key, $index) {
                     return $val->getType()->getName();
+                },
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('hop')
+                        ->where('hop.approved = true');
                 },
             ])
         ;

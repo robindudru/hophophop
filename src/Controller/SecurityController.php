@@ -36,7 +36,7 @@ class SecurityController extends AbstractController
 
         return $this->render('security/registration.html.twig', [
             'form' => $form->createView(),
-            'headerText' => ''
+            'headerText' => 'BrewMate - Inscription'
         ]);
     }
 
@@ -45,7 +45,7 @@ class SecurityController extends AbstractController
      */
     public function login(){
         return $this->render('security/login.html.twig', [
-            'headerText' => ''
+            'headerText' => 'BrewMate - Connexion'
         ]);
     }
 

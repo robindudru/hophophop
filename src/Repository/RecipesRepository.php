@@ -26,28 +26,20 @@ class RecipesRepository extends ServiceEntityRepository
         
         if($filter->getStyle()) {
             $query = $query
-                ->where('p.style = :style')
+                ->andWhere('p.style = :style')
                 ->setParameter('style', $filter->getStyle());
         }
 
         if($filter->getMethod()) {
             $query = $query
-                ->where('p.method = :method')
+                ->andWhere('p.method = :method')
                 ->setParameter('method', $filter->getMethod());
         }
 
         if($filter->getDifficulty()) {
-            if ($filter->getDifficulty() == 'beginner') {
-                $query = $query
-                    ->where('p.method = :method')
-                    ->setParameter('method', 'kit');
-            }
-            else if ($filter->getDifficulty() == 'confirmed') {
-                $query = $query->where('ARRAY_LENGTH(p.recipeHops) = 1');
-            }
-            else if($filter->getDifficulty() == 'expert') {
-                $query = $query->where('ARRAY_LENGTH(p.recipeHops) > 1');
-            }
+            $query = $query
+                ->andWhere('p.difficulty = :difficulty')
+                ->setParameter('difficulty', $filter->getDifficulty());
         }
         
         return $query->getQuery();
@@ -55,8 +47,32 @@ class RecipesRepository extends ServiceEntityRepository
 
     private function findRecipesQuery()
     {
-        return $this->createQueryBuilder('p');
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.createdAt', 'DESC')    
+        ;
     }
+
+    public function findLastThree()
+    {
+        return $this->createQueryBuilder('l')
+            ->orderBy('l.createdAt', 'DESC')
+            ->setMaxResults(6)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findUserOnes($user)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.author = :user')
+            ->setParameter('user', $user)
+            ->orderBy('u.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Recipes[] Returns an array of Recipes objects
     //  */

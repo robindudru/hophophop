@@ -35,15 +35,24 @@
                     <a href="{{ path('security_login') }}"><i class="fas fa-power-off"></i></a>
                 </div>
             {% else %}
-                <div class="dropright col-12">
+                <div class="dropup col-12">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" id="user-panel" href="#" aria-expanded="false">
-                    <div class="user-avatar">
-                        <img src="{{ asset('build/avatars/')}}{{user.avatar}}" />
-                    </div>
+                        <div class="user-avatar">
+                            <img src="{{ asset('build/avatars/')}}{{user.avatar|default('default.png')}}" />
+                        </div>
                     </a>
                     <div class="dropdown-menu mt-1 mr-3" aria-labelledby="user-panel">
-                        <a class="dropdown-item" href="{{ path('edit_profile') }}">Profil</a>
+                        <a class="dropdown-item" href="{{ path('edit_profile') }}"><b>{{user.username}}</b><i class="fas fa-cog ml-2"></i></a>
+                        <div class="dropdown-divider"></div>
+                        {% if 'ROLE_BIERROT_GOURMAND' in user.roles %}
+                        <a class="dropdown-item" href="{{ path('admin_home')}}">Espace Administration</a>
+                        <div class="dropdown-divider"></div>
+                        {% endif %}
                         <a class="dropdown-item" href="{{ path('add_recipe') }}">Ajouter une recette</a>
+                        <a class="dropdown-item" href="{{ path('add_malt') }}">Ajouter un malt</a>
+                        <a class="dropdown-item" href="{{ path('add_hop') }}">Ajouter un houblon</a>
+                        <a class="dropdown-item" href="{{ path('add_other') }}">Ajouter un autre ingrédient</a>
+                        <a class="dropdown-item" href="{{ path('add_yeast') }}">Ajouter une levure</a>
                         <a class="dropdown-item" href="{{ path('security_logout') }}">Déconnexion</a>
                     </div>
                 </div>

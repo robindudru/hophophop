@@ -38,6 +38,11 @@ class Yeast
      */
     private $recipes;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $approved;
+
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
@@ -111,6 +116,18 @@ class Yeast
                 $recipe->setYeast(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getApproved(): ?bool
+    {
+        return $this->approved;
+    }
+
+    public function setApproved(bool $approved): self
+    {
+        $this->approved = $approved;
 
         return $this;
     }

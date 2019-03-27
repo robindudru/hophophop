@@ -3,7 +3,7 @@
 {% form_theme formEditProfile 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
-<div class="main-content formRecipe">
+<div class="main-container form mx-auto pt-5" id="edit-profile">
 {{ form_start(formEditProfile) }}
 
 {{ form_row(formEditProfile.email) }}
@@ -12,11 +12,13 @@
     <div class="col-9">
         {{ form_row(formEditProfile.avatar)}}
     </div>
-    <div class="edit-profile-avatar">
-        <img src="{{ asset('build/avatars/')}}{{user.avatar}}" />
+    <div class="edit-profile-avatar ml-5">
+        <img src="{{ asset('build/avatars/')}}{{user.avatar|default('default.png')}}" />
     </div>
 </div>
-<button type="submit" class="btn btn-success">Modifier</button>
+<div class="text-center">
+    <button type="submit" class="btn btn-success mt-3">Modifier</button>
+</div>
 {{ form_end(formEditProfile) }}
 </div>
 {% endblock %}

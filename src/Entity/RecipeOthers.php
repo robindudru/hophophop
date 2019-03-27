@@ -32,6 +32,11 @@ class RecipeOthers
      */
     private $recipes;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $boilTime;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class RecipeOthers
     public function setRecipes(?Recipes $recipes): self
     {
         $this->recipes = $recipes;
+
+        return $this;
+    }
+
+    public function getBoilTime(): ?int
+    {
+        return $this->boilTime;
+    }
+
+    public function setBoilTime(?int $boilTime): self
+    {
+        $this->boilTime = $boilTime;
 
         return $this;
     }

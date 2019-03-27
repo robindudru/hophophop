@@ -38,6 +38,11 @@ class OtherIngredient
      */
     private $recipeOthers;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $approved;
+
     public function __construct()
     {
         $this->recipeOthers = new ArrayCollection();
@@ -111,6 +116,18 @@ class OtherIngredient
                 $recipeOther->setOtherIngredient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getApproved(): ?bool
+    {
+        return $this->approved;
+    }
+
+    public function setApproved(bool $approved): self
+    {
+        $this->approved = $approved;
 
         return $this;
     }

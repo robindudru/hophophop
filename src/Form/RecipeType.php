@@ -91,7 +91,11 @@ class RecipeType extends AbstractType
                 'class' => Yeast::class,
                 'placeholder' => 'Choisis une levure',
                 'choice_label' => 'name',
-                'label' => 'Levure'
+                'label' => 'Levure',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('yeast')
+                        ->where('yeast.approved = true');
+                },
             ])
             ->add('boilTime', TextType::class, [
                 'attr' => [

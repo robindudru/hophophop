@@ -124,6 +124,11 @@ class Recipes
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $difficulty;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -436,6 +441,18 @@ class Recipes
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDifficulty(): ?string
+    {
+        return $this->difficulty;
+    }
+
+    public function setDifficulty(string $difficulty): self
+    {
+        $this->difficulty = $difficulty;
 
         return $this;
     }

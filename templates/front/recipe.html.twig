@@ -2,6 +2,8 @@
 
 {% block title %}{{ recipe.title }}{% endblock %}
 
+{% form_theme commentForm 'bootstrap_4_layout.html.twig' %}
+
 {% block pageheader %}{{ include('front/components/pageheader.html.twig') }}{% endblock %}
 
 {% block body %}
@@ -60,11 +62,11 @@
             {{recipe.mashGuide}}
         </div>
         {% endif %}
-        {% if recipe.method != 'kit' %}
+        {% if recipe.recipeMalts is not empty %}
         <div class="row mt-5">
             <h2 class="collegier fs-2"><span class="mr-2">empatage</h2>
         </div>
-        <div class="row alert alert-info alert-dismissable fade show text-justify">
+        <div class="row no-gutters alert alert-info alert-dismissable fade show text-justify">
             <p>
                 <div class="col fs-1 mx-0 px-0 mb-2"><b>Notes de BrewMate</b></div>
                 <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
@@ -124,10 +126,12 @@
             </div>
         </div>
         {% endfor %}
+        {% endif %}
+        {% if recipe.recipeHops is not empty %}
         <div class="row mt-5">
             <h2 class="collegier fs-2"><span class="mr-2">ebullition</h2>
         </div>
-        <div class="row alert alert-info alert-dismissable fade show text-justify">
+        <div class="row no-gutters alert alert-info alert-dismissable fade show text-justify">
             <p>
                 <div class="col fs-1 mx-0 px-0 mb-2"><b>Notes de BrewMate</b></div>
                 <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
@@ -162,7 +166,7 @@
             </div>
         </div>
         {% for hop in recipe.recipeHops %}
-        <div class="row no-gutters">
+        <div class="row no-gutters mb-5">
             <div class="col-1">
                 {{ hop.weight }}
             </div>
@@ -200,13 +204,13 @@
             </div>
         </div>
         {% endfor %}
-
+        {% endif %}
         {% if recipe.recipeOthers is not empty %}
-        <div class="row alert alert-info alert-dismissable fade show text-justify">
-            <p>
+        <div class="alert alert-info alert-dismissable fade show text-justify">
+            <div class="row px-3">
                 <div class="col fs-1 mx-0 px-0 mb-2"><b>Notes de BrewMate</b></div>
                 <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-            </p>
+            </div>
             <p>Il est possible d'ajouter autre chose que du houblon pendant l'ébullition ou la fermentation, comme des fruits ou des clarifiants</p>
             <p>Reporte toi aux notes du brasseur pour plus de détails !</p>
         </div>
@@ -236,7 +240,7 @@
                 {{ other.otherIngredient.name }}
             </div>
             <div class="col-2">
-                {{ other.boilTime }}
+                {% if other.boiltime is not null %}{{ other.boilTime }}mn{% endif %}
             </div>
             <div class="col-3">
                 {% if other.otherIngredient.SBUrl is not empty %}
@@ -261,6 +265,59 @@
         </div>
         {% endfor %}
         {% endif %}
+        <div class="row mt-5">
+            <h2 class="collegier fs-2"><span class="mr-2">commentaires</h2>
+        </div>
+        {% if recipe.comments is not empty %}
+        {% for comment in recipe.comments %}
+            <div class="alert alert-secondary px-5">
+                <div class="row">
+                    <div>
+                        <div class="comment-avatar">
+                            <img src="{{ asset('build/avatars/')}}{{comment.author.avatar|default('default.png')}}" />
+                        </div>
+                    </div>
+                    <div class="pl-3 my-auto">
+                        <b>{{comment.author.username}}</b><br />
+                        {{comment.createdAt|date('\\l\\e d/m/Y \\à H:m')}}
+                    </div>
+                    {% if 'ROLE_BIERROT_GOURMAND' in user.roles %}
+                    <div class="col text-right">
+                        <a href="{{ path('delete_comment', {'id': comment.id}) }}"><i class="fas fa-times"></i></a>
+                    </div>
+                    {% endif %}
+                </div>
+                <hr />
+                <div class="row">
+                    {{comment.content}}
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+        <div class="alert alert-warning">
+            <b>Hmmm...</b> personne n'a encore commenté cette recette. Sois le premier !
+        </div>
+        {% endif %}
+        <div class="row no-gutters mt-2">
+            <span class="fs-1"><b>Ajouter un commentaire</b></span>
+        </div>
+        {% if user is not empty %}
+        <div class="row no-gutters mt-2 comment-form">
+            {{ form_start(commentForm) }}
+            <div class="row no-gutters ">
+                <div class="col-12">
+                    {{ form_widget(commentForm.content) }}
+                </div>
+            </div>
+             <div class="row mt-4">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-success">
+                            Commenter
+                    </button>
+                </div>
+            </div>
+            {{ form_end(commentForm) }}
+        </div>
         {% endif %}
     </section>
 
@@ -268,22 +325,27 @@
         <div class="row">
             <div class="col-2">
                 <div class="recipe-avatar">
-                    <img src="{{asset('build/avatars/')}}{{recipe.author.avatar}}" alt="Avatar de {{recipe.author.username}}" />
+                    <img src="{{asset('build/avatars/')}}{{recipe.author.avatar|default('default.png')}}" alt="Avatar de {{recipe.author.username}}" />
                 </div>
             </div>
             <div class="col-10 pl-4">
                 <h2 class="fs-2 collegier mb-0">{{recipe.author.username}}</h2>
                 <span class="text-muted pl-1">ajoutée le {{ recipe.createdAt|date('d/m/Y') }}</span>
-                {% if recipe.author == user %}
+                {% if user is not null and 'ROLE_BIERROT_GOURMAND' in user.roles %}
                 <div class="row pl-3">
                         <a href="{{path('edit_recipe', {'id': recipe.id})}}"><span class="badge badge-info mr-3">EDITER</span></a>
-                        <a href="{{path('delete_recipe', {'id': recipe.id})}}"><span class="badge badge-danger">SUPPRIMER</span></a>
+                        <a href="{{path('delete_recipe', { 'id': recipe.id }) }}"><span class="badge badge-danger">SUPPRIMER</span></a>
+                </div>
+                {% elseif recipe.author == user %}
+                <div class="row pl-3">
+                        <a href="{{path('edit_recipe', {'id': recipe.id})}}"><span class="badge badge-info mr-3">EDITER</span></a>
+                        <a href="{{path('delete_recipe', { 'id': recipe.id }) }}"><span class="badge badge-danger">SUPPRIMER</span></a>
                 </div>
                 {% endif %}
             </div>
         </div>
         <div class="row">
-        
+            
         </div>
     </aside>
 </div>

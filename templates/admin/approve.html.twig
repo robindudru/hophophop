@@ -11,9 +11,7 @@
         </div>
         <div class="card-body">
             <p class="card-text my-4">
-            Tu es sur le point de supprimer
-                {% if recipe is defined %}ta recette <b>{{recipe.title}}</b>{% endif %}
-                {% if comment is defined %}un commentaire{% endif %}
+            Tu es sur le point de valider
                 {% if malt is defined %}le malt <b>{{malt.name}}</b>{% endif %}
                 {% if hop is defined %}le houblon <b>{{hop.name}}</b>{% endif %}
                 {% if other is defined %}l'ingrédient <b>{{other.name}}</b>{% endif %}
@@ -23,11 +21,7 @@
                     <button type="submit" class="btn btn-primary">Oui, c'est pour ça que j'ai cliqué !</button>
                 </div>
                 <div class="col text-left">
-                    {% if recipe is defined %}
-                        <a href="{{ path('recipe', {'id': recipe.id})}}" class="btn btn-primary">Non ! Je me suis trompé !</a>
-                    {% elseif comment is defined %}
-                        <a href="{{ path('recipe', {'id': comment.article.id})}}" class="btn btn-primary">Non ! Je me suis trompé !</a>
-                    {% elseif malt is defined %}
+                    {% if malt is defined %}
                         <a href="{{ path('admin_home')}}" class="btn btn-primary">Non ! Je me suis trompé !</a>
                     {% elseif hop is defined %}
                         <a href="{{ path('admin_home')}}" class="btn btn-primary">Non ! Je me suis trompé !</a>

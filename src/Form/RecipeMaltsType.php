@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Malt;
 use App\Entity\RecipeMalts;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -27,6 +28,10 @@ class RecipeMaltsType extends AbstractType
                 'choice_label' => 'name',
                 'group_by' => function($val, $key, $index) {
                     return $val->getType()->getName();
+                },
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('malt')
+                        ->where('malt.approved = true');
                 },
             ])
         ;

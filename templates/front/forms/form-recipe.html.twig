@@ -5,9 +5,8 @@
 {% form_theme formRecipe 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
-<div class="container-form row">
-    
-    <div class="col-9 formRecipe">
+<div class="main-container row">   
+    <div class="col-9 form">
         <div class="row alert alert-info alert-dismissable fade show text-justify">
             <p>
                 <div class="col fs-1 mx-0 px-0 mb-2"><b>A noter</b></div>
@@ -63,7 +62,8 @@
                     <ul class="others" data-prototype="{{ form_widget(formRecipe.recipeOthers.vars.prototype)|e('html_attr') }}">
                     {% for other in formRecipe.recipeOthers %}
                             <li>{{ form_row(other.weight) }}
-                            {{ form_row(other.otherIngredient) }}</li>
+                            {{ form_row(other.otherIngredient) }}
+                            {{ form_row(other.boilTime) }}</li>
                     {% endfor %}
                     </ul>
                 </div>
@@ -86,7 +86,7 @@
             </div>
         {{ form_end(formRecipe) }}
     </div>
-    <div class="col-3 pl-5 formRecipe-aside">
+    <div class="col-3 pl-5 form-aside">
         <div class="row alert alert-secondary text-justify">
             <p>
                 <div class="col fs-1 mx-0 px-0 mb-2"><b>Bon à savoir</b></div>

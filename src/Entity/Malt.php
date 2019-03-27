@@ -47,6 +47,11 @@ class Malt
      */
     private $BLUrl;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $approved;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,6 +113,18 @@ class Malt
     public function setBLUrl(?string $BLUrl): self
     {
         $this->BLUrl = $BLUrl;
+
+        return $this;
+    }
+
+    public function getApproved(): ?bool
+    {
+        return $this->approved;
+    }
+
+    public function setApproved(bool $approved): self
+    {
+        $this->approved = $approved;
 
         return $this;
     }

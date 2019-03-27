@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formHop 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+<div class="main-container row">   
+    <div class="col-9 form">
+        <div class="row alert alert-info alert-dismissable fade show text-justify">
+            <p>
+                <div class="col fs-1 mx-0 px-0 mb-2"><b>A noter</b></div>
+                <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+            </p>
+            <p>Tu peux ajouter ici un nouveau houblon à la base de données. Tu dois préciser au moins le nom du houblon, son type et ses acides alpha (indice d'amertume). Les liens vers les pages BrouwLand
+            et Saveur Bière ne sont pas obligatoires, ils mais si ils existent, ce serait bien de les mettre :).</p>
+        </div>
+        {{ form_start(formHop) }}
+            {{ form_widget(formHop)}}
+            <div class="col text-center">
+                <button type="submit" class="btn btn-success">
+                    {% if edit %}
+                        Modifier ce houblon
+                    {% else %}
+                        Ajouter ce houblon
+                    {% endif %}
+                </button>
+            </div>
+        {{ form_end(formHop) }}
+    </div>
+    <div class="col-3 pl-5 form-aside">
+        <div class="row alert alert-secondary text-justify">
+            <p>
+                <div class="col fs-1 mx-0 px-0 mb-2"><b>Bon à savoir</b></div>
+            </p>
+            <p>Ton  houblon ne sera pas disponible immédiatement sur le site !</p>
+            <p>Il doit être modéré par les administrateurs de BrewMate (pour vérifier que le houblon n'existe pas déjà sur le site).</p>
+            <p>Si l'équipe de modération a besoin de plus d'informations, elle te les demandera par mail !</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

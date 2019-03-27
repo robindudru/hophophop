@@ -10,7 +10,7 @@
 
 @font-face {
     font-family: "CabbageTown";
-    src: url("assets/fonts/CabbageTownStd.ttf");
+    src: url("assets/fonts/CabbagetownStd.ttf");
 }
 
 @font-face {
@@ -93,16 +93,28 @@ a {
         font-size: 2.5vw;
         margin:auto;
     }
+    .fa-cog {
+        font-size: 0.8vw;
+        color: $BrewBlack;
+        transition: all 1s ease;
+        &:hover {
+            color: $BrewBlack;
+            font-size:0.8vw;
+            transform: rotate(180deg);
+        }
+    }
     .dropdown-toggle:after{ 
         content: none;
     }
     .dropdown-menu {
         z-index:500;
-        margin-top: -100%;
+        margin-left: 4.2vw;
+        margin-bottom: -5vh;
     }
     .user-avatar {
         height:5vh;
         width:5vh;
+        background-color: $BrewOrange;
         overflow:hidden;
         border-radius: 50%;
         img {
@@ -111,7 +123,6 @@ a {
         }
     }
 }
-
 
 
 // Page header
@@ -138,17 +149,33 @@ a {
     width:85vw;
 }
 
-.container-form {
+.main-container {
     margin-left: 6vw;
     width: 92vw;
+    margin-top: 12vh;
+}
+
+.home-avatar {
+    width:4vw;
+    height:4vw;
+    overflow:hidden;
+    border-radius:50%;
+    background-color: $BrewOrange;
+    img {
+        height: 4vw;
+        min-width: auto;
+    }
+}
+
+.user-panel-username {
+    line-height: 2vh;
 }
 
 //
 // Forms
 //
 
-.formRecipe {
-    margin-top: 12vh;
+.form {
     label {
         font-weight: bold;
     }
@@ -160,7 +187,43 @@ a {
     }
 }
 
-.formRecipe-aside {
+.form-aside {
+    margin-top: 12vh;
+}
+
+#edit-profile {
+    width: 50vw;
+}
+
+//
+// Login
+//
+
+.form-card-content {
+    width:96vw;
+    margin-left:4vw;
+    padding-top: 30vh;
+    .card {
+        width: 50%;
+        margin: 0 auto;
+    }
+}
+
+//
+// Delete Page
+//
+
+.delete-content {
+    width:96vw;
+    margin-left:4vw;
+    padding-top: 40vh;
+    .card {
+        width: 50%;
+        margin: 0 auto;
+    }
+}
+
+.delete-success {
     margin-top: 12vh;
 }
 
@@ -220,6 +283,7 @@ a {
     }
     .card-footer {
         .recipe-avatar {
+            background-color: $BrewOrange;
             height:3vw;
             width: 3vw;
             overflow:hidden;
@@ -267,22 +331,12 @@ a {
                 font-size: .7vw;
             }
         }
-        .shopping-notempty, .shopping-empty {
-            img {
-                height: 2vh;
-                width: auto;
-            }
-        }
-        .shopping-empty {
-            img {
-                filter: grayscale(100%);
-            }
-        }
     }
     .side-recipe {
         height: 86vh;
         border-left:1px solid lightgrey;
         .recipe-avatar {
+            background: $BrewOrange;
             width:4vw;
             height:4vw;
             overflow:hidden;
@@ -291,6 +345,43 @@ a {
                 height: 4vw;
                 min-width: auto;
             }
+        }
+    }
+    .fa-times {
+        font-size: 1vw!important;
+        color: rgb(155, 18, 18);
+    }
+}
+
+.shopping-notempty, .shopping-empty {
+    img {
+        height: 2vh;
+        width: auto;
+    }
+}
+.shopping-empty {
+    img {
+        filter: grayscale(100%);
+    }
+}
+
+.comment-avatar {
+    background: $BrewOrange;
+    width:2.5vw;
+    height:2.5vw;
+    overflow:hidden;
+    border-radius:50%;
+    img {
+        height: 2.5vw;
+        min-width: auto;
+    }
+}
+
+.comment-form {
+    form {
+        width:100%;
+        textarea {
+            height: 10vh;
         }
     }
 }
@@ -307,5 +398,18 @@ a {
     img {
         height:100%;
         min-width:auto;
+    }
+}
+
+//
+// Admin Home
+//
+
+.admin-home {
+    .fa-times {
+        color: rgb(155, 18, 18);
+    }
+    .fa-check {
+        color: rgb(27, 158, 49);
     }
 }

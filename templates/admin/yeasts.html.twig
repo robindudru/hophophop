@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Levures{% endblock %}
+
+{% block body %}
+<div class="main-container admin-home">
+<div class="row">
+    <div class="col-10">
+        <div class="row mt-5">
+            <h2 class="collegier fs-2"><span class="mr-2">liste</span><span class="mr-2">des</span>levures</h2>
+        </div>
+        {% if yeasts is not empty %}
+        <div class="row no-gutters my-3 malts-header">
+            <div class="col-1">
+            </div>
+            <div class="col-8">
+                <b>Nom</b>
+            </div>
+            <div class="col-3">
+                <b>Commander</b> <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+        {% for yeast in yeasts %}
+        <div class="row no-gutters">
+            <div class="col-1">
+                <a href="{{ path('edit_yeast', {'id': yeast.id} ) }}" title="Editer"><i class="fas fa-edit mr-2"></i></a>
+            </div>
+            <div class="col-8">
+                {{ yeast.name }}
+            </div>
+            <div class="col-3">
+                {% if yeast.SBUrl is not empty %}
+                <div class="d-inline shopping-notempty mr-2">
+                    <a href="{{yeast.SBUrl}}" target="_blank" title="Acheter sur Saveur Bière" ><img src="{{asset('build/layout/sb.jpg')}}" alt="Acheter du malt {{ yeast.name }} sur Saveur Bière" /></a>
+                </div>
+                {% elseif yeast.SBUrl is empty %}
+                <div class="d-inline shopping-empty mr-2">
+                    <img src="{{asset('build/layout/sb.jpg')}}" title="Indisponible sur Saveur Bière" />
+                </div>
+                {% endif %}
+                    {% if yeast.BLUrl is not empty %}
+                <div class="d-inline shopping-notempty">
+                    <a href="{{yeast.BLUrl}}" target="_blank" title="Acheter sur Brouwland" ><img src="{{asset('build/layout/bl.png')}}" alt="Acheter du malt {{ yeast.name }} sur Brouwland" /></a>
+                </div>
+                {% elseif yeast.BLUrl is empty %}
+                <div class="d-inline shopping-empty">
+                    <img src="{{asset('build/layout/bl.png')}}" title="Indisponible sur Brouwland" />
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            <div class="alert alert-warning mt-4">
+                <b>Rien à faire !</b> Personne n'a soumis de levure.
+            </div>
+        {% endif %}
+        </div>
+        <div class="col-2">
+        {{ include('admin/components/side-menu.html.twig') }}
+        </div>
+</div>
+{% endblock %}

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\HopType;
+use App\Entity\HopTypes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -12,15 +12,15 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method HopType[]    findAll()
  * @method HopType[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class HopTypeRepository extends ServiceEntityRepository
+class HopTypesRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, HopType::class);
+        parent::__construct($registry, HopTypes::class);
     }
 
     // /**
-    //  * @return HopType[] Returns an array of HopType objects
+    //  * @return HopTypes[] Returns an array of HopTypes objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class HopTypeRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?HopType
+    public function findOneBySomeField($value): ?HopTypes
     {
         return $this->createQueryBuilder('h')
             ->andWhere('h.exampleField = :val')

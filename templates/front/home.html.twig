@@ -1,6 +1,194 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Recettes de bière participatives !{% endblock %}
+
 {% block body %}
-<h1>{{ title }}</h1>
+<div class="main-container">
+    <div class="row no-gutters">
+        <div class="col-9">
+            {% if 'ajouter' in referer %}
+            <div class=" mt-4 alert alert-success delete-success alert-dismissable fade show text-justify">
+                <div class="row px-3">
+                    <div class="col fs-1 mx-0 px-0 mb-2"><b>Bravo !</b></div>
+                    <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                </div>
+                <p>L'ingrédient a été soumis avec succès ! Il sera bientôt passé en revue par un modérateur. Merci pour ta participation à BrewMate !</p>
+            </div>
+            {% endif %}
+            <div class=" mt-1 alert alert-info alert-dismissable fade show text-justify">
+                <div class="row px-3">
+                    <div class="col fs-1 mx-0 px-0 mb-2"><b>Bienvenue sur BrewMate</b></div>
+                    <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                </div>
+                <p>BrewMate est une base de données de recettes de bière. Tu pourras retrouver les recettes proposées par les autres membres et ajouter tes propres recettes
+                pour les partager avec les autres membres.</p>
+                <p>Ce site est participatif, ce qui veut dire que son contenu dépend de sa communauté ! Tu peux donc construire cette base de données avec nous en ajoutant tes recettes mais aussi
+                tous les ingrédients nécessaires au brassage de la bière.</p>
+                <p>Il propose aussi des tutoriels pour se lancer dans le brassage. Matériel nécessaire, pas à pas de l'exécution d'une recette, explication de tous les acronymes et termes techniques,
+                BrewMate t'accompagne dans tes premiers pas de brasseur !</p>
+                <p>Enfin, ce site est gratuit et consultable par tous ! Les recettes et tutoriels sont publics, seules les fonctions d'ajout de contenu demandent d'<a href="{{ path('security_registration') }}">avoir un compte</a>.
+                Il nous faut juste un mail et un pseudo, le reste, on s'en fout ! (mais on t'aime bien hein).</p>
+            </div>
+            <div class="row">
+                <span class="collegier fs-2"><span class="mr-3">dernieres</span> recettes</span>
+            </div>
+            <div class="row">
+            {% for recipe in lastRecipes %}
+                <article class="col-4 mt-2 mb-4">
+                    <div class="card recipe-card">
+                        <div class="row no-gutters card-header">
+                            <a href="{{ path('recipe', {'id': recipe.id}) }}">
+                                <h2 class="card-title text-center mx-2 mb-0">{{ recipe.title }}</h2>
+                            </a>
+                        </div>
+                        <div class="card-content pl-3">
+                            <div class="my-2">
+                                {% if recipe.method == "kit" %}
+                                    <span class="badge badge-secondary">Kit</span>
+                                {% else %}
+                                    <span class="badge badge-secondary">Tout Grain</span>
+                                {% endif %}
+                                <span class="badge badge-secondary">{{recipe.style.name}}</span>
+                                {% if recipe.method == "kit" %}
+                                    <span class="badge badge-success">Débutant</span>
+                                {% elseif recipe.recipeHops|length > 1 %}
+                                    <span class="badge badge-dark">Expert</span>
+                                {% elseif recipe.recipeHops|length == 1 %}
+                                    <span class="badge badge-info">Confirmé</span>
+                                {% endif %}
+                            </div>
+                            <div class="row recipe-icons my-3 flex-row align-items-center justify-content-center">
+                                <div class="px-3 thumbs-up"><i class="far fa-thumbs-up"></i><span>{{recipe.thumbsUp}}</span></div>
+                                <div class="alcohol px-0">{{recipe.alcohol}}%</div>
+                                <i class="px-3 fas fa-beer ebc-{{ recipe.color }}"></i>
+                            </div>  
+                            <div class="col-12">
+                                    <i class="fas fa-quote-left fa-pull-left"></i>
+                                    <p class="text-justify mb-1 mr-3">{{recipe.description}}</p> 
+                            </div>
+                        </div>
+                        <div class="row no-gutters card-footer px-2 align-items-center">
+                                <div class="recipe-avatar">
+                                    <img src="{{ asset('build/avatars/')}}{{recipe.author.avatar|default('default.png')}}" />
+                                </div>
+                                <div class="ml-2">
+                                    <b>{{ recipe.author.username }}</b><br/>
+                                    <span class="text-muted">{{recipe.createdAt|date('d/m/Y')}}</span>
+                                </div>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+            </div>
+            {% if user is not null %}
+            <div class="row mt-4">
+                <span class="collegier fs-2"><span class="mr-3">mes</span> recettes</span>
+            </div>
+                {% if user.recipes|length > 0 %}
+                    <div class="row">
+                    {% for recipe in userRecipes %}
+                        <article class="col-4 mt-2 mb-4">
+                            <div class="card recipe-card">
+                                <div class="row no-gutters card-header">
+                                    <a href="{{ path('recipe', {'id': recipe.id}) }}">
+                                        <h2 class="card-title text-center mx-2 mb-0">{{ recipe.title }}</h2>
+                                    </a>
+                                </div>
+                                <div class="card-content pl-3">
+                                    <div class="my-2">
+                                        {% if recipe.method == "kit" %}
+                                            <span class="badge badge-secondary">Kit</span>
+                                        {% else %}
+                                            <span class="badge badge-secondary">Tout Grain</span>
+                                        {% endif %}
+                                        <span class="badge badge-secondary">{{recipe.style.name}}</span>
+                                        {% if recipe.method == "kit" %}
+                                            <span class="badge badge-success">Débutant</span>
+                                        {% elseif recipe.recipeHops|length > 1 %}
+                                            <span class="badge badge-dark">Expert</span>
+                                        {% elseif recipe.recipeHops|length == 1 %}
+                                            <span class="badge badge-info">Confirmé</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="row recipe-icons my-3 flex-row align-items-center justify-content-center">
+                                        <div class="px-3 thumbs-up"><i class="far fa-thumbs-up"></i><span>{{recipe.thumbsUp}}</span></div>
+                                        <div class="alcohol px-0">{{recipe.alcohol}}%</div>
+                                        <i class="px-3 fas fa-beer ebc-{{ recipe.color }}"></i>
+                                    </div>  
+                                    <div class="col-12">
+                                            <i class="fas fa-quote-left fa-pull-left"></i>
+                                            <p class="text-justify mb-1 mr-3">{{recipe.description}}</p> 
+                                    </div>
+                                </div>
+                                <div class="row no-gutters card-footer px-2 align-items-center">
+                                        <div class="recipe-avatar">
+                                            <img src="{{ asset('build/avatars/')}}{{recipe.author.avatar|default('default.png')}}" />
+                                        </div>
+                                        <div class="ml-2">
+                                            <b>{{ recipe.author.username }}</b><br/>
+                                            <span class="text-muted">{{recipe.createdAt|date('d/m/Y')}}</span>
+                                        </div>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                    </div>
+                {% else %}
+                <div class=" mt-1 alert alert-info alert-dismissable fade show text-justify">
+                    <div class="row px-3">
+                        <div class="col fs-1 mx-0 px-0 mb-2"><b>On a rien trouvé</b></div>
+                        <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                    </div>
+                    <p>Apparemment, tu n'as pas encore ajouté de recette sur BrewMate.</p>
+                    <p>On ne t'en veut pas (trop). Mais si jamais l'envie te prend de le faire, tu retrouveras toutes tes recettes ici, pour pouvoir les gérer plus facilement.</p>
+                </div>
+                {% endif %}
+
+            {% endif %}   
+        </div>
+        <aside class="col-3 pl-5">
+            <div class="row">
+            {% if user is not null %}
+                <div class="col-2">
+                    <div class="home-avatar">
+                        <img src="{{asset('build/avatars/')}}{{user.avatar|default('default.png')}}" alt="Avatar de {{user.username}}" />
+                    </div>
+                </div>
+                <div class="col-10 pl-4 mt-3 user-panel-username">
+                        <span class="fs-2 collegier mb-0">{{user.username}}</span><br />
+                        <span class="text-muted">
+                            <i class="fas fa-beer"></i>
+                        {% if 'ROLE_BIERROT_GOURMAND' in user.roles %}
+                            Super Admin
+                        {% elseif user.recipes|length > 5 %}
+                            Maître Brasseur
+                        {% elseif user.recipes|length > 1 %}
+                            Brasseur Confirmé
+                        {% elseif user.recipes|length == 1 %}
+                            Brasseur Amateur
+                        {% else %}
+                            Brasseur en Herbe
+                        {% endif %}
+                        </span>
+                </div>
+            {% else %}
+                <div class="alert alert-success text-justify">
+                    <div class="row no-gutters w-100">
+                        <div class="col fs-1 mx-0 px-0 mb-2"><b>Nouveau sur BrewMate ?</b></div>
+                    </div>
+                    <div class="row no-gutters">
+                        <p>Il semblerait que tu ne sois pas connecté, peut-être qu'on ne se connaît pas encore ?</p>
+                        <p>Tu peux t'<a href="{{ path('security_registration') }}">inscrire</a> sur le site pour commencer à contribuer aux recettes et ingrédients et commenter les oeuvres
+                        des autres brasseurs !</p>
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+            <div class="row">
+            
+            </div>
+        </aside>
+    </div>
+</div>
 {% endblock %}
 

@@ -3,11 +3,20 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-<div class="main-content">
-    <h1>Inscription</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form)}}
-    <button type="submit" class="btn btn-success">Je m'inscris</button>
-    {{ form_end(form) }}
+<div class="form-card-content">
+    <div class="card">
+        <div class="card-header">
+            <b>Inscription</b>
+        </div>
+        <div class="card-body">
+            {{ form_start(form) }}
+            {{ form_widget(form)}}
+            <div class="text-center">
+                <button type="submit" class="btn btn-success mt-3">Je m'inscris</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <div class="text-center text-muted mt-4">Déjà inscrit? <a href="{{path('security_login')}}">Connecte-toi !</a></div>
 </div>
 {% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formYeast 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+<div class="main-container row">   
+    <div class="col-9 form">
+        <div class="row alert alert-info alert-dismissable fade show text-justify">
+            <p>
+                <div class="col fs-1 mx-0 px-0 mb-2"><b>A noter</b></div>
+                <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+            </p>
+            <p>Tu peux ajouter ici une nouvelle levure à la base de données. Tu dois préciser au moins son nom. Les liens vers les pages BrouwLand
+            et Saveur Bière ne sont pas obligatoires, ils mais si ils existent, ce serait bien de les mettre :).</p>
+        </div>
+        {{ form_start(formYeast) }}
+            {{ form_widget(formYeast)}}
+            <div class="col text-center">
+                <button type="submit" class="btn btn-success">
+                    {% if edit %}
+                        Modifier cette levure
+                    {% else %}
+                        Ajouter cette levure
+                    {% endif %}
+                </button>
+            </div>
+        {{ form_end(formYeast) }}
+    </div>
+    <div class="col-3 pl-5 form-aside">
+        <div class="row alert alert-secondary text-justify">
+            <p>
+                <div class="col fs-1 mx-0 px-0 mb-2"><b>Bon à savoir</b></div>
+            </p>
+            <p>Ta levure ne sera pas disponible immédiatement sur le site !</p>
+            <p>Elle doit être modérée par les administrateurs de BrewMate (pour vérifier que la levure n'existe pas déjà sur le site).</p>
+            <p>Si l'équipe de modération a besoin de plus d'informations, elle te les demandera par mail !</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

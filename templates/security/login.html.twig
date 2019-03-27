@@ -3,19 +3,27 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-<h1>Connexion</h1>
-
-<div class="main-content">
-<form method="post" action="{{ path('security_login') }}">
-    <div class="form-group">
-        <input type="email" class="form-control" placeholder="Email" name="_username" required>
+<div class="form-card-content">
+    <div class="card">
+        <div class="card-header">
+            <b>Connexion</b>
+        </div>
+        <div class="card-body">
+            <form method="post" action="{{ path('security_login') }}">
+                <div class="form-group">
+                    <label for="email">Adresse e-mail</label>
+                    <input type="email" class="form-control" placeholder="Email" name="_username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label> 
+                    <input type="password" class="form-control" placeholder="Mot de passe" name="_password" required>
+                </div>  
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success mt-3">Connexion</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <input type="password" class="form-control" placeholder="Mot de passe" name="_password" required>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-success">Connexion</button>
-    </div>
-</form>
+    <div class="text-center text-muted mt-4">On ne se connaît pas encore ? <a href="{{path('security_registration')}}">Inscris-toi !</a></div>
 </div>
 {% endblock %}

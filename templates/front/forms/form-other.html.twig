@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formOther 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+<div class="main-container row">   
+    <div class="col-9 form">
+        <div class="row alert alert-info alert-dismissable fade show text-justify">
+            <p>
+                <div class="col fs-1 mx-0 px-0 mb-2"><b>A noter</b></div>
+                <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+            </p>
+            <p>Tu peux ajouter ici un nouvel autre ingrédient à la base de données. Tu dois préciser au moins le nom de l'ingrédient. Les liens vers les pages BrouwLand
+            et Saveur Bière ne sont pas obligatoires, ils mais si ils existent, ce serait bien de les mettre :).</p>
+            <p>Attention, pour un malt d'une autre céréale que l'orge, utilise plutôt <a href="{{path('add_malt')}}">le formulaire d'ajout de malt</a>. Ici, ajoute plutôt des fruits,
+            des épices ou des additifs.</p>
+        </div>
+        {{ form_start(formOther) }}
+            {{ form_widget(formOther)}}
+            <div class="col text-center">
+                <button type="submit" class="btn btn-success">
+                    {% if edit %}
+                        Modifier cet ingrédient
+                    {% else %}
+                        Ajouter cet ingrédient
+                    {% endif %}
+                </button>
+            </div>
+        {{ form_end(formOther) }}
+    </div>
+    <div class="col-3 pl-5 form-aside">
+        <div class="row alert alert-secondary text-justify">
+            <p>
+                <div class="col fs-1 mx-0 px-0 mb-2"><b>Bon à savoir</b></div>
+            </p>
+            <p>Ton  ingrédient ne sera pas disponible immédiatement sur le site !</p>
+            <p>Il doit être modéré par les administrateurs de BrewMate (pour vérifier que l'ingrédient n'existe pas déjà sur le site).</p>
+            <p>Si l'équipe de modération a besoin de plus d'informations, elle te les demandera par mail !</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

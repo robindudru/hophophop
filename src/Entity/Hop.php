@@ -29,7 +29,7 @@ class Hop
     private $alphaAcid;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\HopType", inversedBy="hops")
+     * @ORM\ManyToOne(targetEntity="App\Entity\HopTypes", inversedBy="hops")
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;
@@ -48,6 +48,11 @@ class Hop
      * @ORM\OneToMany(targetEntity="App\Entity\RecipeHops", mappedBy="hop")
      */
     private $recipeHops;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $approved;
 
     public function __construct()
     {
@@ -83,12 +88,12 @@ class Hop
         return $this;
     }
 
-    public function getType(): ?HopType
+    public function getType(): ?HopTypes
     {
         return $this->type;
     }
 
-    public function setType(?HopType $type): self
+    public function setType(?HopTypes $type): self
     {
         $this->type = $type;
 
@@ -146,6 +151,18 @@ class Hop
                 $recipeHop->setHop(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getApproved(): ?bool
+    {
+        return $this->approved;
+    }
+
+    public function setApproved(bool $approved): self
+    {
+        $this->approved = $approved;
 
         return $this;
     }
