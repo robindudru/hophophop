@@ -29,6 +29,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -208,6 +209,14 @@ class FrontController extends AbstractController
      */
     public function recipe(Recipes $recipe, Comment $comment = null, Request $request, ObjectManager $manager)
     {
+        if($request->request->get('newThumbsUp')){
+            $recipe->setThumbsUp($recipe->getThumbsUp() + 1);
+            $manager->persist($recipe);
+            $manager->flush();
+            $arrData = ['output' => $recipe->getThumbsUp()];
+            return new JsonResponse($arrData);
+        }
+
         if(!$comment){
             $comment = new Comment();
         }

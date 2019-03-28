@@ -12,3 +12,4 @@ import '../css/app.scss';
 import $ from 'jquery';
 
 import '../js/AddCollectionTypeField.js';
+import '../js/ThumbUp.js';

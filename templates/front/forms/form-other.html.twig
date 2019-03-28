@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{% if edit %}Modifier{% else %}Ajouter{% endif %} un ingrédient{% endblock %}
+
 {% form_theme formOther 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter une recette{% endblock %}
+{% block title %}{% if edit %}Modifier{% else %}Ajouter{% endif %} une recette{% endblock %}
 
 {% form_theme formRecipe 'bootstrap_4_layout.html.twig' %}
 

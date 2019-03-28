@@ -6,7 +6,7 @@
     {% endif %}
         <h1 class="fs-3 px-5 my-auto">
             {% if recipe is defined %}
-            {{recipe.title}}
+            {{recipe.title|replace({'é': 'e', 'à': 'a', 'è': 'e', 'ê': 'e', 'ë': 'e', 'ï':'i', 'î':'i', 'ù':'u'})}}
             {% endif %}
             {% if recipes is defined %}
             Recettes de biere
