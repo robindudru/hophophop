@@ -188,11 +188,16 @@ a {
 }
 
 .form-aside {
-    margin-top: 12vh;
 }
 
 #edit-profile {
     width: 50vw;
+}
+
+.form-tutorial {
+    textarea.ckeditor {
+        height: 40vh;
+    }
 }
 
 //
@@ -385,6 +390,12 @@ a {
         }
     }
 }
+
+//
+// Tutorials
+//
+
+
 
 //
 // User Edit Profile

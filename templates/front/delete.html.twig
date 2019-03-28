@@ -17,7 +17,8 @@
                 {% if malt is defined %}le malt <b>{{malt.name}}</b>{% endif %}
                 {% if hop is defined %}le houblon <b>{{hop.name}}</b>{% endif %}
                 {% if other is defined %}l'ingrédient <b>{{other.name}}</b>{% endif %}
-                {% if yeast is defined %}la levure <b>{{yeast.name}}</b>{% endif %}. Es-tu sûr ?</p>
+                {% if yeast is defined %}la levure <b>{{yeast.name}}</b>{% endif %}
+                {% if tutorial is defined %}le tutoriel <b>{{tutorial.title}}</b>{% endif %}. Es-tu sûr ?</p>
             <div class="row mt-5">
                 <div class="col text-right">
                     <button type="submit" class="btn btn-primary">Oui, c'est pour ça que j'ai cliqué !</button>
@@ -34,6 +35,8 @@
                     {% elseif other is defined %}
                         <a href="{{ path('admin_home')}}" class="btn btn-primary">Non ! Je me suis trompé !</a>
                     {% elseif yeast is defined %}
+                        <a href="{{ path('admin_home')}}" class="btn btn-primary">Non ! Je me suis trompé !</a>
+                    {% elseif tutorial is defined %}
                         <a href="{{ path('admin_home')}}" class="btn btn-primary">Non ! Je me suis trompé !</a>
                     {% endif %}
                 </div>

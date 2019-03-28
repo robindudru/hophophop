@@ -72,10 +72,16 @@ class User implements UserInterface
      */
     private $avatar;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tutorial", mappedBy="author", orphanRemoval=true)
+     */
+    private $tutorials;
+
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->tutorials = new ArrayCollection();
     }
 
     public function getRoles(): array
@@ -206,6 +212,37 @@ class User implements UserInterface
     public function setAvatar(?string $avatar): self
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tutorial[]
+     */
+    public function getTutorials(): Collection
+    {
+        return $this->tutorials;
+    }
+
+    public function addTutorial(Tutorial $tutorial): self
+    {
+        if (!$this->tutorials->contains($tutorial)) {
+            $this->tutorials[] = $tutorial;
+            $tutorial->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTutorial(Tutorial $tutorial): self
+    {
+        if ($this->tutorials->contains($tutorial)) {
+            $this->tutorials->removeElement($tutorial);
+            // set the owning side to null (unless already changed)
+            if ($tutorial->getAuthor() === $this) {
+                $tutorial->setAuthor(null);
+            }
+        }
 
         return $this;
     }

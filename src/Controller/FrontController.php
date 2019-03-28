@@ -11,6 +11,7 @@ use App\Form\MaltType;
 use App\Entity\Comment;
 use App\Entity\Recipes;
 use App\Form\YeastType;
+use App\Entity\Tutorial;
 use App\Form\DeleteType;
 use App\Form\RecipeType;
 use App\Form\CommentType;
@@ -23,6 +24,7 @@ use App\Entity\OtherIngredient;
 use App\Form\RecipesFilterType;
 use App\Form\OtherIngredientType;
 use App\Repository\RecipesRepository;
+use App\Repository\TutorialRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -230,6 +232,36 @@ class FrontController extends AbstractController
             'user' => $user,
             'comment' => $comment,
             'commentForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("tutoriels/", name="tutorials")
+     */
+    public function tutorials(TutorialRepository $repo, Request $request, ObjectManager $manager)
+    {
+        $user = $this->getUser();
+
+        $tutorials = $repo->findAll();
+
+        return $this->render('front/tutorials.html.twig', [
+            'tutorials' => $tutorials,
+            'user' => $user,
+            'headerText' => 'BrewMate: Tutoriels'
+        ]);
+    } 
+    
+    /**
+     * @Route("tutoriel/{id}", name="tutorial")
+     */
+    public function tutorial(Tutorial $tutorial, Request $request, ObjectManager $manager)
+    {
+        $user = $this->getUser();
+
+        return $this->render('front/tutorial.html.twig', [
+            'tutorial' => $tutorial,
+            'user' => $user,
+            'headerText' => 'BrewMate : Les tutoriels'
         ]);
     }
 

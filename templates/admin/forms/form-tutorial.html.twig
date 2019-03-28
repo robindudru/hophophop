@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formTutorial 'bootstrap_4_layout.html.twig' %}
+
+{% block javascripts %}
+<script src="{{ asset('javascript/ckeditor/adapters/jquery.js') }}" type="text/javascript"></script>
+<script src="{{ asset('javascript/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+        $('textarea.ckeditor').ckeditor();
+    });
+</script>
+{% endblock %}
+
+{% block title %}Ajouter un tutoriel{% endblock %}
+
+{% block body %}
+<div class="main-container row">   
+    <div class="col-9 form form-tutorial">
+        {{ form_start(formTutorial) }}
+            {{ form_widget(formTutorial)}}
+            <div class="col text-center">
+                <button type="submit" class="btn btn-success">
+                    {% if edit %}
+                        Modifier ce tutoriel
+                    {% else %}
+                        Poster ce tutoriel
+                    {% endif %}
+                </button>
+            </div>
+        {{ form_end(formTutorial) }}
+    </div>
+    <div class="col-3 pl-5 form-aside">
+        <div class="row alert alert-secondary text-justify">
+            <p>
+                <div class="col fs-1 mx-0 px-0 mb-2"><b>Bon à savoir</b></div>
+            </p>
+            <p>Ton  houblon ne sera pas disponible immédiatement sur le site !</p>
+            <p>Il doit être modéré par les administrateurs de BrewMate (pour vérifier que le houblon n'existe pas déjà sur le site).</p>
+            <p>Si l'équipe de modération a besoin de plus d'informations, elle te les demandera par mail !</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

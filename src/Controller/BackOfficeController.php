@@ -6,8 +6,10 @@ use App\Entity\Hop;
 use App\Entity\Malt;
 use App\Entity\Yeast;
 use App\Form\MaltType;
+use App\Entity\Tutorial;
 use App\Form\DeleteType;
 use App\Form\ApproveType;
+use App\Form\TutorialType;
 use App\Entity\OtherIngredient;
 use App\Repository\HopRepository;
 use App\Repository\MaltRepository;
@@ -39,6 +41,75 @@ class BackOfficeController extends AbstractController
             'yeasts' => $yeastsToValidate,
             'referer' => $request->headers->get('referer')
         ]);
+    }
+
+    
+
+    /**
+     * @Route("admin/tutoriel/ajouter", name="add_tutorial")
+     * @Route("admin/tutoriel/{id}/modifier", name="edit_tutorial")
+     */
+
+     public function formTutorial(Tutorial $tutorial = null, Request $request, ObjectManager $manager)
+     {
+        if(!$tutorial){
+            $tutorial = new Tutorial();
+        }
+
+        $user = $this->getUser();
+
+        $form = $this->createForm(TutorialType::class, $tutorial); 
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if(!$tutorial->getId()){
+                $tutorial->setAuthor($user)
+            ;}
+            if ($tutorial->getAuthor() === $user || in_array('ROLE_BIERROT_GOURMAND', $user->getRoles())) {
+                $manager->persist($tutorial);
+                $manager->flush();
+            }
+           return $this->redirectToRoute('tutorial', ['id' => $tutorial->getId()]);
+        }
+
+        return $this->render('admin/forms/form-tutorial.html.twig', [
+            'formTutorial' => $form->createView(),
+            'edit' => $tutorial->getId() !== null,
+            'user' => $user,
+            'headerText' => 'Ecrire un tutoriel'
+        ]);
+     }
+
+     /**
+     * @Route("admin/tutoriel/{id}/supprimer", name="delete_tutorial")
+     */
+    public function deleteTutorial(Tutorial $tutorial, Request $request, ObjectManager $manager) {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+
+        $form = $this->createForm(DeleteType::class); 
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (in_array('ROLE_BIERROT_GOURMAND', $user->getRoles())) {
+                $manager->remove($tutorial);
+                $manager->flush();
+            }
+            else {
+                throw new Exception('Hmmm, t\'as pas le droit de faire ça.');
+            }
+            return $this->redirectToRoute('tutorials');
+        }
+        else {
+            return $this->render('front/delete.html.twig', [
+                'formDelete' => $form->createView(),
+                'user' => $user,
+                'tutorial' => $tutorial,
+                'headerText' => 'Supprimer un tutoriel'
+            ]);
+        }
     }
 
     /**
