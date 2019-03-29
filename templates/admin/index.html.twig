@@ -202,7 +202,7 @@
         </div>
         {% for yeast in yeasts %}
         <div class="row no-gutters">
-            <div class="col-2 col-lg-8">
+            <div class="col-2 col-lg-1">
                 <a href="{{ path('edit_yeast', {'id': yeast.id} ) }}" title="Editer"><i class="fas fa-edit mr-2"></i></a>
                 <a href="{{ path('delete_yeast', {'id': yeast.id} ) }}" title="Refuser"><i class="fas fa-times mr-2"></i></a>
                 <a href="{{ path('approve_yeast', {'id': yeast.id} ) }}" title="Valider"><i class="fas fa-check"></i></a>
