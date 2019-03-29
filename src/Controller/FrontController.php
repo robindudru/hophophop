@@ -115,7 +115,7 @@ class FrontController extends AbstractController
                 if (count($recipe->getRecipeHops()) > 1) {
                     $difficulty = 'expert';
                 }
-                else if (count($recipe->getRecipeHops() === 1)) {
+                else if (count($recipe->getRecipeHops()) === 1) {
                     $difficulty = 'confirmed';
                 }
                 else {
@@ -199,7 +199,8 @@ class FrontController extends AbstractController
             return $this->render('front/delete.html.twig', [
                 'formDelete' => $form->createView(),
                 'user' => $user,
-                'comment' => $comment
+                'comment' => $comment,
+                'headerText' => 'Supprimer un commentaire'
             ]);
         }
     }

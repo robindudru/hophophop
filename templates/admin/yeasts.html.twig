@@ -5,9 +5,12 @@
 {% block body %}
 <div class="main-container admin-home">
 <div class="row">
-    <div class="col-10">
+    <div class="row d-lg-none">
+        {{ include('admin/components/top-menu.html.twig') }}
+    </div>
+    <div class="col-12 col-lg-10">
         <div class="row mt-5">
-            <h2 class="collegier fs-2"><span class="mr-2">liste</span><span class="mr-2">des</span>levures</h2>
+            <h2 class="collegier fs-2 subtitle"><span class="mr-2">liste</span><span class="mr-2">des</span>levures</h2>
         </div>
         {% if yeasts is not empty %}
         <div class="row no-gutters my-3 malts-header">
@@ -17,7 +20,7 @@
                 <b>Nom</b>
             </div>
             <div class="col-3">
-                <b>Commander</b> <i class="fas fa-shopping-cart"></i>
+                <span class="d-none d-lg-inline"><b>Commander</b> </span><i class="fas fa-shopping-cart"></i>
             </div>
         </div>
         {% for yeast in yeasts %}
@@ -56,7 +59,7 @@
             </div>
         {% endif %}
         </div>
-        <div class="col-2">
+        <div class="d-none d-lg-block col-2">
         {{ include('admin/components/side-menu.html.twig') }}
         </div>
 </div>

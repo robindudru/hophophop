@@ -8,7 +8,7 @@
 <div class="row no-gutters recipe-wrapper mb-5 px-5">
     <div class=" mt-1 alert alert-info text-justify">
         <div class="col-12 px-3">
-            <div class="col fs-1 mx-0 px-0 mb-2"><b>Tutoriels Brewmate</b></div>
+            <div class="col fs-1 mx-0 px-0 mb-2 phone-title"><b>Tutoriels Brewmate</b></div>
         </div>
         <p>Un jour je serai le meilleur brasseur, je me battrai sans répit.</p>
         <p>Si tu es arrivé ici en te disant ça, (ou un truc qui y ressemble), tu es au bon endroit. Tu trouveras ici des tutoriels et articles sur les techniques du brassage de
@@ -17,11 +17,11 @@
         Tu penses à quelque chose qui n'est pas expliqué dans ces pages ou que tu trouves toi-même un peu flou ? <a href="mailto:contact@brew-mate.fr">Envoie nous un mail</a> pour nous en parler.</p>
     </div>
     <div class="col-12 my-2">
-        <div class="collegier fs-2"><span class="mr-2">liste</span><span class="mr-2">des</span>tutoriels</div>
+        <div class="collegier fs-2 subtitle"><span class="mr-2">liste</span><span class="mr-2">des</span>tutoriels</div>
     </div>
     {% for tutorial in tutorials %}
     <div class="col-12 list-tutorials">
-        <a href="{{ path('tutorial', {'id': tutorial.id}) }}"><h2 class="fs-1">{{tutorial.title}}</h2></a>
+        <a href="{{ path('tutorial', {'id': tutorial.id}) }}"><h2 class="fs-1 tutorial-title">{{tutorial.title}}</h2></a>
     </div>
     {% endfor %}
 </div>

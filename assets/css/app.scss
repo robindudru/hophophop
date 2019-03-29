@@ -27,6 +27,9 @@ body {
     position:relative;
     font-family: "Roboto";
     overflow-x: hidden;
+    @media(max-width:992px) {
+        font-size:4vw;
+    }
 }
 
 .main-content {
@@ -34,6 +37,10 @@ body {
     margin-left: 4vw;
     margin-top: 7vh;
     width:96vw;
+    @media(max-width:992px) {
+        margin-top: 14vh;
+        margin-left:3vw;
+    }
 }
 
 a {
@@ -44,7 +51,32 @@ a {
     }
 }
 
+.alert {
+    @media(max-width:992px) {
+        font-size: 3vw;
+        .phone-title {
+            font-size: 3vw;
+        }
+    }
+}
 
+.phone-collegier {
+    @media(max-width:992px) {
+        font-size: 6vw!important;
+    }
+}
+
+.subtitle {
+    @media(max-width:992px) {
+        font-size: 5vw!important;
+    }
+}
+
+.tutorial-title {
+    @media(max-width:992px) {
+        font-size: 3vw!important;
+    }
+}
 
 //
 // Utilities
@@ -69,7 +101,7 @@ a {
 
 // NavBar
 
-.navbar {
+.navbar-desktop {
     width:4vw;
     height:100vh;
     top:0;
@@ -124,6 +156,29 @@ a {
     }
 }
 
+.phone-navbar {
+    color:white;
+    background-color: $BrewBlack;
+    height: 5vh;
+    position:fixed;
+    top: 0;
+    left:0;
+    z-index:999;
+    .navbar-brand {
+        color: white;
+        font-size: 5vw;
+    }
+    a {
+        color: white;
+    }
+    .dropdown-menu{
+        font-size: 3vw;
+        color: black;
+        a {
+            color:black;
+        }
+    }
+}
 
 // Page header
 
@@ -137,6 +192,12 @@ a {
     h1 {
         font-family: "CabbageTown";
         color: white;
+    }
+    @media(max-width:992px){
+        margin-top:5vh;
+        h1 {
+            font-size:5vw;
+        }
     }
 }
 
@@ -153,6 +214,10 @@ a {
     margin-left: 6vw;
     width: 92vw;
     margin-top: 12vh;
+    @media(max-width:992px) {
+        margin-top: 17vh;
+        margin-left: 4vw;
+    }
 }
 
 .home-avatar {
@@ -176,6 +241,14 @@ a {
 //
 
 .form {
+    @media(max-width:992px) {
+        input, textarea, select, button {
+            font-size: 3vw;
+        }
+        a {
+            font-size:2vw;
+        }
+    }
     label {
         font-weight: bold;
     }
@@ -211,7 +284,14 @@ a {
     .card {
         width: 50%;
         margin: 0 auto;
+        @media(max-width:992px) {
+            width:90%;
+            button, a, input {
+                font-size: 3vw;
+            }
+        }
     }
+    
 }
 
 //
@@ -225,6 +305,12 @@ a {
     .card {
         width: 50%;
         margin: 0 auto;
+        @media(max-width:992px) {
+            width:90%;
+            button, a {
+                font-size: 3vw;
+            }
+        }
     }
 }
 
@@ -246,12 +332,18 @@ a {
     height:65vh;
     border: 1px solid rgba(0,0,0,.2);
     transition: all .4s ease;
+    @media(max-width:992px) {
+        height:55vh;
+    }
     &:hover {
         box-shadow: .3vw .3vw rgba(0,0,0,.5);
     }
     .card-title {
         font-family: 'Fonters';
         font-size: 2vw;
+        @media(max-width:992px) {
+            font-size:6vw;
+        }
     }
     .author {
         font-family: "Segoe UI";
@@ -273,14 +365,24 @@ a {
                     left:50%;
                     font-size:1.5vw;
                     font-weight: bold;
+                    @media(max-width:992px) {
+                        top:30%;
+                        font-size: 5vw;
+                    }
                 }
             }
         }
         .alcohol {
             font-size: 4vw;
+            @media(max-width:992px) {
+                font-size: 9vw;
+            }
         }
         i {
             font-size:5vw;
+            @media(max-width:992px) {
+                font-size: 12vw;
+            }
         }
         .fa-quote-left, .fa-quote-right {
             font-size:2vw;
@@ -293,9 +395,16 @@ a {
             width: 3vw;
             overflow:hidden;
             border-radius:50%;
+            @media(max-width:992px) {
+                height: 9vw;
+                width: 9vw;
+            }
             img {
                 height:3vw;
                 min-width:auto;
+                @media(max-width:992px) {
+                    height: 9vw;
+                }
             }
         }
     }
@@ -314,9 +423,30 @@ a {
     margin-top: 13vh;
     width: 96vw;
     margin-left:4vw;
+    @media(max-width:992px) {
+        margin-top: 18vh;
+        margin-left: 2vw;
+    }
     .main-recipe {
         i {
             font-size: 3vw;
+            @media(max-width:992px) {
+                font-size: 5.5vw;
+            }
+        }
+        @media(max-width:992px) {
+            .batch-size, .beer-alcohol, .beer-color, .thumbs-up-number {
+                font-size: 4vw!important;
+            }
+            .beer-method, .beer-style {
+                font-size: 5vw;
+            }
+            .recipe-subtitles {
+                font-size: 5vw;
+            }
+            .fa-shopping-cart {
+                font-size: 3vw!important;
+            }
         }
         .fa-thumbs-up {
             transition: all .5s ease;
@@ -380,6 +510,13 @@ a {
         height: 2.5vw;
         min-width: auto;
     }
+    @media(max-width:992px) {
+        width:7vw;
+        height:7vw;
+        img {
+            height:7vw;
+        }
+    }
 }
 
 .comment-form {
@@ -387,15 +524,17 @@ a {
         width:100%;
         textarea {
             height: 10vh;
+            @media(max-width:992px){
+                font-size: 3vw;
+            }
+        }
+        @media(max-width:992px) {
+            button {
+                font-size: 4vw;
+            }
         }
     }
 }
-
-//
-// Tutorials
-//
-
-
 
 //
 // User Edit Profile

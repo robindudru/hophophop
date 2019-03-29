@@ -6,10 +6,10 @@
 
 {% block body %}
 <div class="main-container row">   
-    <div class="col-9 form">
+    <div class="col-12 col-lg-9 form">
         <div class="row alert alert-info alert-dismissable fade show text-justify">
             <p>
-                <div class="col fs-1 mx-0 px-0 mb-2"><b>A noter</b></div>
+                <div class="col fs-1 mx-0 px-0 mb-2 phone-title"><b>A noter</b></div>
                 <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
             </p>
             <p>Tu peux ajouter ici une nouvelle levure à la base de données. Tu dois préciser au moins son nom. Les liens vers les pages BrouwLand
@@ -28,7 +28,7 @@
             </div>
         {{ form_end(formYeast) }}
     </div>
-    <div class="col-3 pl-5 form-aside">
+    <div class="d-none d-lg-block col-3 pl-5 form-aside">
         <div class="row alert alert-secondary text-justify">
             <p>
                 <div class="col fs-1 mx-0 px-0 mb-2"><b>Bon à savoir</b></div>

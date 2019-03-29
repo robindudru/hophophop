@@ -5,35 +5,38 @@
 {% block body %}
 <div class="main-container admin-home">
 <div class="row">
-    <div class="col-10">
+    <div class="row d-lg-none">
+        {{ include('admin/components/top-menu.html.twig') }}
+    </div>
+    <div class="col-12 col-lg-10">
         <div class="row mt-5">
-            <h2 class="collegier fs-2"><span class="mr-2">malts</span><span class="mr-2">a</span>valider</h2>
+            <h2 class="collegier fs-2 subtitle"><span class="mr-2">malts</span><span class="mr-2">a</span>valider</h2>
         </div>
         {% if malts is not empty %}
         <div class="row no-gutters my-3 malts-header">
-            <div class="col-1">
+            <div class="col-2 col-lg-1">
             </div>
-            <div class="col-4">
+            <div class="col-3 col-lg-4">
                 <b>Nom</b>
             </div>
             <div class="col-2">
                 <b>Type</b>
             </div>
             <div class="col-2">
-                <b>Valeur EBC</b>
+                <b><span class="d-none d-lg-inline">Valeur </span>EBC</b>
             </div>
             <div class="col-3">
-                <b>Commander</b> <i class="fas fa-shopping-cart"></i>
+                <span class="d-none d-lg-inline"><b>Commander</b> </span><i class="fas fa-shopping-cart"></i>
             </div>
         </div>
         {% for malt in malts %}
         <div class="row no-gutters">
-            <div class="col-1">
+            <div class="col-2 col-lg-1">
                 <a href="{{ path('edit_malt', {'id': malt.id} ) }}" title="Editer"><i class="fas fa-edit mr-2"></i></a>
                 <a href="{{ path('delete_malt', {'id': malt.id} ) }}" title="Refuser"><i class="fas fa-times mr-2"></i></a>
                 <a href="{{ path('approve_malt', {'id': malt.id} ) }}" title="Valider"><i class="fas fa-check"></i></a>
             </div>
-            <div class="col-4">
+            <div class="col-3 col-lg-4">
                 {{ malt.name }}
             </div>
             <div class="col-2">
@@ -70,33 +73,33 @@
             </div>
         {% endif %}
         <div class="row mt-5">
-            <h2 class="collegier fs-2"><span class="mr-2">houblons</span><span class="mr-2">a</span>valider</h2>
+            <h2 class="collegier fs-2 subtitle"><span class="mr-2">houblons</span><span class="mr-2">a</span>valider</h2>
         </div>
         {% if hops is not empty %}
         <div class="row no-gutters my-3 malts-header">
-            <div class="col-1">
+            <div class="col-2 col-lg-1">
             </div>
-            <div class="col-4">
+            <div class="col-3 col-lg-4">
                 <b>Nom</b>
             </div>
             <div class="col-2">
                 <b>Type</b>
             </div>
             <div class="col-2">
-                <b>Valeur AA</b>
+                <b><span class="d-none d-lg-inline">Valeur </span>AA</b>
             </div>
             <div class="col-3">
-                <b>Commander</b> <i class="fas fa-shopping-cart"></i>
+                <span class="d-none d-lg-inline"><b>Commander</b> </span><i class="fas fa-shopping-cart"></i>
             </div>
         </div>
         {% for hop in hops %}
         <div class="row no-gutters">
-            <div class="col-1">
+            <div class="col-2 col-lg-1">
                 <a href="{{ path('edit_hop', {'id': hop.id} ) }}" title="Editer"><i class="fas fa-edit mr-2"></i></a>
                 <a href="{{ path('delete_hop', {'id': hop.id} ) }}" title="Refuser"><i class="fas fa-times mr-2"></i></a>
                 <a href="{{ path('approve_hop', {'id': hop.id} ) }}" title="Valider"><i class="fas fa-check"></i></a>
             </div>
-            <div class="col-4">
+            <div class="col-3 col-lg-4">
                 {{ hop.name }}
             </div>
             <div class="col-2">
@@ -133,27 +136,27 @@
             </div>
         {% endif %}
         <div class="row mt-5">
-            <h2 class="collegier fs-2"><span class="mr-2">autres</span><span class="mr-2">ingredients</span><span class="mr-2">a</span>valider</h2>
+            <h2 class="collegier fs-2 subtitle"><span class="mr-2">autres</span><span class="mr-2">ingredients</span><span class="mr-2">a</span>valider</h2>
         </div>
         {% if others is not empty %}
         <div class="row no-gutters my-3 malts-header">
-            <div class="col-1">
+            <div class="col-2 col-lg-1">
             </div>
-            <div class="col-8">
+            <div class="col-7 col-lg-8">
                 <b>Nom</b>
             </div>
             <div class="col-3">
-                <b>Commander</b> <i class="fas fa-shopping-cart"></i>
+                <span class="d-none d-lg-inline"><b>Commander</b> </span><i class="fas fa-shopping-cart"></i>
             </div>
         </div>
         {% for other in others %}
         <div class="row no-gutters">
-            <div class="col-1">
+            <div class="col-2 col-lg-1">
                 <a href="{{ path('edit_other', {'id': other.id} ) }}" title="Editer"><i class="fas fa-edit mr-2"></i></a>
                 <a href="{{ path('delete_other', {'id': other.id} ) }}" title="Refuser"><i class="fas fa-times mr-2"></i></a>
                 <a href="{{ path('approve_other', {'id': other.id} ) }}" title="Valider"><i class="fas fa-check"></i></a>
             </div>
-            <div class="col-8">
+            <div class="col-7 col-lg-8">
                 {{ other.name }}
             </div>
             <div class="col-3">
@@ -184,27 +187,27 @@
             </div>
         {% endif %}
         <div class="row mt-5">
-            <h2 class="collegier fs-2"><span class="mr-2">levures</span><span class="mr-2">a</span>valider</h2>
+            <h2 class="collegier fs-2 subtitle"><span class="mr-2">levures</span><span class="mr-2">a</span>valider</h2>
         </div>
         {% if yeasts is not empty %}
         <div class="row no-gutters my-3 malts-header">
-            <div class="col-1">
+            <div class="col-2 col-lg-1">
             </div>
-            <div class="col-8">
+            <div class="col-7 col-lg-8">
                 <b>Nom</b>
             </div>
             <div class="col-3">
-                <b>Commander</b> <i class="fas fa-shopping-cart"></i>
+                <span class="d-none d-lg-inline"><b>Commander</b> </span><i class="fas fa-shopping-cart"></i>
             </div>
         </div>
         {% for yeast in yeasts %}
         <div class="row no-gutters">
-            <div class="col-1">
+            <div class="col-2 col-lg-8">
                 <a href="{{ path('edit_yeast', {'id': yeast.id} ) }}" title="Editer"><i class="fas fa-edit mr-2"></i></a>
                 <a href="{{ path('delete_yeast', {'id': yeast.id} ) }}" title="Refuser"><i class="fas fa-times mr-2"></i></a>
                 <a href="{{ path('approve_yeast', {'id': yeast.id} ) }}" title="Valider"><i class="fas fa-check"></i></a>
             </div>
-            <div class="col-8">
+            <div class="col-7 col-lg-8">
                 {{ yeast.name }}
             </div>
             <div class="col-3">
@@ -235,7 +238,7 @@
             </div>
         {% endif %}
     </div>
-    <div class="col-2">
+    <div class="d-none d-lg-block col-2">
         {{ include('admin/components/side-menu.html.twig') }}
     </div>
 </div>

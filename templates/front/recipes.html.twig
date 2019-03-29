@@ -15,7 +15,7 @@
 {% endif %}
 <section class="row recipes-list mx-auto pt-1">
 {% for recipe in recipes %}
-    <article class="col-4 mt-5">
+    <article class="col-12 col-lg-4 mt-5">
         <div class="card recipe-card">
             <div class="row no-gutters card-header">
                 <a href="{{ path('recipe', {'id': recipe.id}) }}">
@@ -32,9 +32,9 @@
                     <span class="badge badge-secondary">{{recipe.style.name}}</span>
                     {% if recipe.method == "kit" %}
                         <span class="badge badge-success">Débutant</span>
-                    {% elseif recipe.recipeHops|length > 1 %}
+                    {% elseif recipe.difficulty == 'expert' %}
                         <span class="badge badge-dark">Expert</span>
-                    {% elseif recipe.recipeHops|length == 1 %}
+                    {% elseif recipe.difficulty == 'confirmed' %}
                         <span class="badge badge-info">Confirmé</span>
                     {% endif %}
                 </div>
@@ -44,8 +44,8 @@
                     <i class="px-3 fas fa-beer ebc-{{ recipe.color }}"></i>
                 </div>  
                 <div class="col-12">
-                        <i class="fas fa-quote-left fa-pull-left"></i>
-                        <p class="text-justify mb-1 mr-3">{{recipe.description}}</p> 
+                    <i class="fas fa-quote-left fa-pull-left"></i>
+                    <p class="text-justify mb-1 mr-3">{{recipe.description|slice(0,300)}}{% if recipe.description|length > 299 %}...{% endif %}</p> 
                 </div>
             </div>
             <div class="row no-gutters card-footer px-2 align-items-center">

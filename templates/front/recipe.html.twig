@@ -8,22 +8,22 @@
 
 {% block body %}
 <div class="row no-gutters recipe-wrapper mb-5">
-    <section class="col-9 main-recipe px-5">
+    <section class="col-12 col-lg-9 main-recipe px-5">
         <div class="row no-gutters">
             <div class="col">
-                <div class="row no-gutters text-right">
+                <div class="row no-gutters text-lg-right">
                     <div class="col">
                         <i class="fas fa-fill-drip"></i>
-                        <span class="fs-3">{{recipe.batchSize}}L</span>
+                        <span class="fs-3 batch-size">{{recipe.batchSize}}L</span>
                     </div>
                     <div class="col">
                         <i class="fas fa-glass-cheers"></i>
-                        <span class="fs-3">{{recipe.alcohol}}%</span>
+                        <span class="fs-3 beer-alcohol">{{recipe.alcohol}}%</span>
                     </div>
                 </div>
                 <div class="row no-gutters">
                     <div class="col text-right">
-                        <span class="collegier fs-3">
+                        <span class="collegier fs-3 beer-method">
                             {% if recipe.method == 'kit' %}
                             <span class="mr-3">brassage</span>kit
                             {% elseif recipe.method == 'allgrain' %}
@@ -37,10 +37,10 @@
                 <img src="{{ asset('build/layout/hop.png')}}" />
             </div>
             <div class="col">
-                <div class="row no-gutters">
+                <div class="row no-gutters text-center text-lg-left">
                     <div class="col">
                         <i class="fas fa-beer ebc-{{recipe.color}}"></i>
-                        <span class="fs-3">{{recipe.color}}EBC</span>
+                        <span class="fs-3 beer-color">{{recipe.color}}EBC</span>
                     </div>
                     <div class="col">
                         <i class="fas fa-thumbs-up"></i>
@@ -49,14 +49,14 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <span class="collegier fs-3"><span class="mr-3">biere</span>{{recipe.style.name}}</span>
+                        <span class="collegier fs-3 beer-style"><span class="mr-3">biere</span>{{recipe.style.name}}</span>
                     </div>
                 </div>
             </div>
         </div>
         {% if recipe.mashGuide is not empty %}
         <div class="row mt-5">
-            <h2 class="collegier fs-2"><span class="mr-2">notes</span><span class="mr-2">du</span>brasseur</h2>
+            <h2 class="collegier fs-2 recipe-subtitles"><span class="mr-2">notes</span><span class="mr-2">du</span>brasseur</h2>
         </div>
         <div class="row text-justify">
             {{recipe.mashGuide}}
@@ -64,11 +64,11 @@
         {% endif %}
         {% if recipe.recipeMalts is not empty %}
         <div class="row mt-5">
-            <h2 class="collegier fs-2"><span class="mr-2">empatage</h2>
+            <h2 class="collegier fs-2 recipe-subtitles"><span class="mr-2">empatage</h2>
         </div>
         <div class="row no-gutters alert alert-info alert-dismissable fade show text-justify">
             <p>
-                <div class="col fs-1 mx-0 px-0 mb-2"><b>Notes de BrewMate</b></div>
+                <div class="col fs-1 mx-0 px-0 mb-2 phone-title"><b>Notes de BrewMate</b></div>
                 <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
             </p>
             <p>La technique d'empâtage de la bière peut varier d'une bière à l'autre. Certains brasseurs choisissent de pratiquer la chauffe en plusieurs paliers de températures
@@ -77,7 +77,7 @@
             pendant environ 90mn. C'est la "base" de tout empâtage (et ce sera quand même très bon).</p>
         </div>
         <div class="row no-gutters mt-2">
-            <span class="fs-1"><b>Liste des malts</b></span>
+            <span class="fs-1 recipe-subtitles"><b>Liste des malts</b></span>
         </div>
         <div class="row no-gutters my-3 malts-header">
             <div class="col-2">
@@ -129,11 +129,11 @@
         {% endif %}
         {% if recipe.recipeHops is not empty %}
         <div class="row mt-5">
-            <h2 class="collegier fs-2"><span class="mr-2">ebullition</h2>
+            <h2 class="collegier fs-2 recipe-subtitles"><span class="mr-2">ebullition</h2>
         </div>
         <div class="row no-gutters alert alert-info alert-dismissable fade show text-justify">
             <p>
-                <div class="col fs-1 mx-0 px-0 mb-2"><b>Notes de BrewMate</b></div>
+                <div class="col fs-1 mx-0 px-0 mb-2 phone-title"><b>Notes de BrewMate</b></div>
                 <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
             </p>
             <p>L'ébullition consiste à faire bouillir le moût et à y ajouter les houblons. Chaque houblon doit être ajouté pendant un certain temps pour conférer à la bière ses
@@ -143,43 +143,43 @@
             <p>Si le temps d'ébullition d'un houblon est à 0, c'est qu'il faut pratiquer ce houblonnage "à cru". Reporte toi aux notes du brasseur.</p>
         </div>
         <div class="row no-gutters mt-2">
-            <span class="fs-1"><b>Liste des houblons</b></span>
+            <span class="fs-1 recipe-subtitles"><b>Liste des houblons</b></span>
         </div>
         <div class="row no-gutters my-3 malts-header">
-            <div class="col-1">
+            <div class="col-2 col-lg-1">
                 Poids (en g)
             </div>
-            <div class="col-2">
+            <div class="d-none d-lg-flex col-2">
                 Profil
             </div>
             <div class="col-4">
                 Nom
             </div>
-            <div class="col-2">
+            <div class="col-2 col-lg-2">
                 Acides Alpha
             </div>
-            <div class="col-1">
+            <div class="col-2">
                 Durée
             </div>
             <div class="col-2">
-               Commander <i class="fas fa-shopping-cart"></i>
+               <i class="fas fa-shopping-cart"></i>
             </div>
         </div>
         {% for hop in recipe.recipeHops %}
         <div class="row no-gutters mb-5">
-            <div class="col-1">
+            <div class="col-2 col-lg-1">
                 {{ hop.weight }}
             </div>
-            <div class="col-2">
+            <div class="d-none d-lg-flex col-2">
                 {{ hop.hop.type.name }}
             </div>
             <div class="col-4">
                 {{ hop.hop.name }}
             </div>
-            <div class="col-2">
+            <div class="col-2 col-lg-2">
                 {{ hop.hop.alphaAcid }}
             </div>
-            <div class="col-1">
+            <div class="col-2">
                 {{ hop.boilTime }}mn
             </div>
             <div class="col-2">
@@ -208,14 +208,14 @@
         {% if recipe.recipeOthers is not empty %}
         <div class="alert alert-info alert-dismissable fade show text-justify">
             <div class="row px-3">
-                <div class="col fs-1 mx-0 px-0 mb-2"><b>Notes de BrewMate</b></div>
+                <div class="col fs-1 mx-0 px-0 mb-2 phone-title"><b>Notes de BrewMate</b></div>
                 <div class="col px-0 mx-0 text-right"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
             </div>
             <p>Il est possible d'ajouter autre chose que du houblon pendant l'ébullition ou la fermentation, comme des fruits ou des clarifiants</p>
             <p>Reporte toi aux notes du brasseur pour plus de détails !</p>
         </div>
         <div class="row no-gutters mt-2">
-            <span class="fs-1"><b>Liste des autres ingrédients</b></span>
+            <span class="fs-1 recipe-subtitles"><b>Liste des autres ingrédients</b></span>
         </div>
         <div class="row no-gutters my-3 malts-header">
             <div class="col-2">
@@ -266,7 +266,7 @@
         {% endfor %}
         {% endif %}
         <div class="row mt-5">
-            <h2 class="collegier fs-2"><span class="mr-2">commentaires</h2>
+            <h2 class="collegier fs-2 recipe-subtitles"><span class="mr-2">commentaires</h2>
         </div>
         {% if recipe.comments is not empty %}
         {% for comment in recipe.comments %}
@@ -299,7 +299,7 @@
         </div>
         {% endif %}
         <div class="row no-gutters mt-2">
-            <span class="fs-1"><b>Ajouter un commentaire</b></span>
+            <span class="fs-1 recipe-subtitles"><b>Ajouter un commentaire</b></span>
         </div>
         {% if user is not empty %}
         <div class="row no-gutters mt-2 comment-form">
@@ -321,7 +321,7 @@
         {% endif %}
     </section>
 
-    <aside class="col-3 side-recipe px-3">
+    <aside class="d-none d-lg-flex col-3 side-recipe px-3">
         <div class="row">
             <div class="col-2">
                 <div class="recipe-avatar">

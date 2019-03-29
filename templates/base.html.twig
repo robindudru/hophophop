@@ -13,26 +13,26 @@
         {% endblock %}
     </head>
     <body>
-        <nav class="navbar row no-gutters p-0 m-0 align-items-start justify-content-start">
+        <nav class="navbar-desktop d-none d-lg-flex row no-gutters p-0 m-0 align-items-start justify-content-start">
             <div class="col-12 text-center">
-                <a href="{{ path('home') }}"><span class="navbar-brand pr-2">BM</span></a>
+                <a href="{{ path('home') }}" title="Accueil"><span class="navbar-brand pr-2">BM</span></a>
             </div>
             <div class="col-12 text-center">
-                <a href="{{ path('home') }}"><i class="fas fa-home"></i></span></a>
+                <a href="{{ path('home') }}" title="Accueil"><i class="fas fa-home"></i></span></a>
             </div>
             <div class="col-12 text-center">
-                <a href="{{ path('recipes') }}"><i class="fas fa-beer"></i></a>
+                <a href="{{ path('recipes') }}" title="Recettes de bière"><i class="fas fa-beer"></i></a>
             </div>
             <div class="col-12 text-center">
-                <a href="{{ path('tutorials') }}"><i class="fas fa-graduation-cap"></i></a>
+                <a href="{{ path('tutorials') }}" title="Tutoriels sur le brassage de bière"><i class="fas fa-graduation-cap"></i></a>
             </div>
             <div class="bottom-navbar col-12">
             {% if not app.user %}
                 <div class="col-12">
-                    <a href="{{ path('security_registration') }}"><i class="fas fa-user-circle"></i></a>
+                    <a href="{{ path('security_registration') }}" title="Inscription"><i class="fas fa-user-circle"></i></a>
                 </div>
                 <div class="col-12 mt-3">
-                    <a href="{{ path('security_login') }}"><i class="fas fa-power-off"></i></a>
+                    <a href="{{ path('security_login') }}" title="Connexion"><i class="fas fa-power-off"></i></a>
                 </div>
             {% else %}
                 <div class="dropup col-12">
@@ -58,6 +58,42 @@
                 </div>
             {% endif %}
             </div>
+        </nav>
+        <nav class="phone-navbar navbar navbar-expand row no-gutters w-100 d-lg-none">
+            <a class="navbar-brand collegier" href="{{ path('home') }}">brewmate</a>
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item pt-2 mx-2">
+                    <a href="{{ path('recipes') }}">Recettes</a>
+                </li>
+                <li class="nav-item pt-2 mx-2">
+                    <a href="{{ path('tutorials') }}">Tutoriels</a>
+                </li>
+                {% if not app.user %}                   
+                    <li class="nav-item pt-2 mx-2">
+                        <a href="{{ path('security_login') }}" title="Connexion">Connexion</a>
+                    </li>
+                {% else %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{user.username}} 
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ path('edit_profile') }}"><b>{{user.username}}</b><i class="fas fa-cog ml-2"></i></a>
+                        <div class="dropdown-divider"></div>
+                        {% if 'ROLE_BIERROT_GOURMAND' in user.roles %}
+                        <a class="dropdown-item" href="{{ path('admin_home')}}">Espace Administration</a>
+                        <div class="dropdown-divider"></div>
+                        {% endif %}
+                        <a class="dropdown-item" href="{{ path('add_recipe') }}">Ajouter une recette</a>
+                        <a class="dropdown-item" href="{{ path('add_malt') }}">Ajouter un malt</a>
+                        <a class="dropdown-item" href="{{ path('add_hop') }}">Ajouter un houblon</a>
+                        <a class="dropdown-item" href="{{ path('add_other') }}">Ajouter un autre ingrédient</a>
+                        <a class="dropdown-item" href="{{ path('add_yeast') }}">Ajouter une levure</a>
+                        <a class="dropdown-item" href="{{ path('security_logout') }}">Déconnexion</a>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
         </nav>
         {% block pageheader %}{{ include('front/components/pageheader.html.twig') }}{% endblock %}
 
