@@ -2,10 +2,11 @@
 # Une base de données de recettes de bières développée avec Symfony 4
 #
 #
-# Pour installer le projet, vous devez avoir un environnement Symfony installé sur votre ordinateur.
+# Pour installer le projet, vous devez avoir un environnement Symfony et yarn installé sur votre ordinateur.
 #
-# Dans votre CLI préférée, rendez vous dans le dossier du projet, et exécutez la commande :
+# Dans votre CLI préférée, rendez vous dans le dossier du projet, et exécutez les commandes :
 # composer install
+# yarn install
 # 
 # Vous aurez alors installé tous les bundles utilisés par BrewMate.
 #
@@ -19,7 +20,7 @@
 # Ensuite, lancez le serveur avec la la commande 
 # php bin/console server:run
 #
-# Vous devez maintenant générer le build de nos assets. Pour cela, vous devez avoir yarn sur votre ordinateur et lancer la commande
+# Vous devez maintenant générer le build de nos assets. Pour cela, vous devez lancer la commande
 # yarn encore dev --watch
 # Vous avez maintenant vos assets. Si vous les modifiez, le build sera regénéré automatiquement.
 #
